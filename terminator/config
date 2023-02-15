@@ -1,0 +1,31 @@
+[global_config]
+  title_transmit_bg_color = "#67bf08"
+[keybindings]
+  split_horiz = <Primary><Alt>d
+  split_vert = <Primary><Alt>c
+  edit_tab_title = <Primary><Alt>s
+[profiles]
+  [[default]]
+    background_darkness = 0.8
+    background_type = transparent
+    cursor_shape = ibeam
+    cursor_color = "#aaaaaa"
+    font = Hack Nerd Font 9
+    foreground_color = "#ebdbb2"
+    use_system_font = False
+    copy_on_selection = True
+  [[biuro]]
+    background_color = "#282828"
+    background_type = transparent
+    cursor_color = "#aaaaaa"
+    foreground_color = "#ebdbb2"
+    copy_on_selection = True
+[layouts]
+  [[default]]
+    [[[window0]]]
+      type = Window
+      parent = ""
+    [[[child1]]]
+      type = Terminal
+      parent = window0
+[plugins]
