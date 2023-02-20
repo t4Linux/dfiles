@@ -15,12 +15,14 @@ if ! [[ -d $MY_FILES/fzf ]]; then
   a=prefix=\'~/.fzf\'
   b=prefix=
   c=$MY_FILES/fzf
-  zsh_plug "junegunn/fzf"
+  bash  zsh_plug "junegunn/fzf"
   sed -ie "s@$a@$b$c@g" $MY_FILES/fzf/install 
   bash  $MY_FILES/fzf/install --all --completion --no-fish --no-bash
-  . $MY_FILES/fzf
+  mv ~/.fzf.zsh $MY_FILES/settings/fzf.zsh
+  rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
+  . $MY_FILES/fzf.zsh
 else
-  . $MY_FILES/fzf
+  . $MY_FILES/fzf.zsh
 fi
 
 zsh_plug "Aloxaf/fzf-tab"

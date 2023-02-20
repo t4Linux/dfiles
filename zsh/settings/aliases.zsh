@@ -8,11 +8,10 @@
 # |                                       /_/            | #
 # |  Description: ZSH configuration          2023-02-17  | #
 # +---------------------------------------- 2023-02-17 --+ #
-MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+MY_FILES="$HOME/t4Linux/dotfiles"
 
-[[ -d "$MY_FILES/aliases" ]]
- && . $MY_FILES/aliases/my_aliases
- && . $MY_FILES/aliases/my_kubectl
- && . $MY_FILES/aliases/aliases_execon
- && . $MY_FILES/aliases/funk
+[[ -d "$MY_FILES/aliases" ]] && \
+. $MY_FILES/aliases/my_aliases && \
+. $MY_FILES/aliases/my_kubectl && \
+. $MY_FILES/aliases/aliases_execon && \
 
