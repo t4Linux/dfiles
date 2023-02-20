@@ -10,11 +10,19 @@
 # 
 source zsh_plug
 MY_FILES="$HOME/t4Linux/dotfiles/zsh"
-a=prefix=\'~/.fzf\'
-b=$MY_FILES\fzf
-sed "s/$a/$b/g"
-zsh_plug "junegunn/fzf"
-sed -i -e 's/^prefix=*/\"$MY_FILES\"\/fzf/g' $MYFILES/fzf/install.sh
+
+if ! [[ -d $MY_FILES/fzf ]]; then
+  a=prefix=\'~/.fzf\'
+  b=prefix=
+  c=$MY_FILES/fzf
+  zsh_plug "junegunn/fzf"
+  sed -ie "s@$a@$b$c@g" $MY_FILES/fzf/install 
+  bash  $MY_FILES/fzf/install --all --completion --no-fish --no-bash
+  . $MY_FILES/fzf
+else
+  . $MY_FILES/fzf
+fi
+
 zsh_plug "Aloxaf/fzf-tab"
 zsh_plug "bigH/git-fuzzy"
 zsh_plug "romkatv/powerlevel10k"
@@ -38,7 +46,7 @@ export FZF_CTRL_R_OPTS="
   --bind 'ctrl-/:toggle-preview'
   --bind 'ctrl-y:execute-silent(echo -n {2..} | pbcopy)+abort'
   --color header:italic
-  --header 'Press CTRL-Y to copy command into clipboard'"
+  --header /'Press CTRL-Y to copy command into clipboard'"
 #
 # CTRL + T Preview file content using bat (https://github.com/sharkdp/bat)
 export FZF_CTRL_T_OPTS="
