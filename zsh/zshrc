@@ -1,0 +1,25 @@
+# +-- created by: achmur -------------- time4Linux ------------------------+ #
+# |     __  __ __  __    _                           __           .--.     | #
+# |    / /_/ // / / /   (_)___  __  ___  __   ____  / /          |ö_ö |    | #
+# |   / __/ // /_/ /   / / __ \/ / / / |/_/  / __ \/ /           |\ü/ |    | #
+# |  / /_/__  __/ /___/ / / / / /_/ />  < _ / /_/ / /           //   \ \   | #
+# |  \__/  /_/ /_____/_/_/ /_/\__,_/_/|_/(_) .___/_/           (|     | )  | #
+# |                                       /_/                 /'\_   _/`\\ | #
+# |  Description: ZSH configuration            2022-12-13     \___)=(___// | #
+# +------------------------------------------ 2023-02-17 ------------------+ #
+# | Shelscript :                                                           | #  
+# | Version    :                                                           | #
+# +------------------------------------------------------------------------+ #                  
+MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+
+[[ -d "$MY_FILES/setings" ]] 
+  && . $MY_FILES/settings/path.zsh            # path
+  && . $MY_FILES/settings/kubectl.zsh         # kubernetes
+  && . $MY_FILES/settings/history.zsh         # history
+  && . $MY_FILES/settings/plugins.zsh         # plugins
+  && . $MY_FILES/settings/editors.zsh         # editors
+  && . $MY_FILES/settings/aliases.zsh         # aliases
+  && . $MY_FILES/settings/power10k.zsh        # power10k
+  && . $MY_FILES/settings/aliases.zsh         # aliases
+  && . $MY_FILES/settings/manjaro-zsh-config  # manjaro
+  && . $MY_FILES/settings/basic.zsh.zsh       # basic zsh config

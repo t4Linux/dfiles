@@ -1,3 +1,4 @@
+#  #!/bin/env bash
 #  # +---------------------------------------------+ #
 #  # | created by: achmur          __  __ __  __   | #
 #  # |                            / /_/ // / / /   | #
@@ -7,8 +8,24 @@
 #  # | KUBERNETES configuration         time4Linux | #
 #  # +---------------------------------------------+ #
 # 
-[[ -f ~/.config/zsh/.fzf.zsh ]] \
-  && source ~/.config/zsh/.fzf.zsh
+source zsh_plug
+MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+a=prefix=\'~/.fzf\'
+b=$MY_FILES\fzf
+sed "s/$a/$b/g"
+zsh_plug "junegunn/fzf"
+sed -i -e 's/^prefix=*/\"$MY_FILES\"\/fzf/g' $MYFILES/fzf/install.sh
+zsh_plug "Aloxaf/fzf-tab"
+zsh_plug "bigH/git-fuzzy"
+zsh_plug "romkatv/powerlevel10k"
+zsh_plug "zsh-users/zsh-completions"
+zsh_plug "zsh-users/zsh-history-substring-search"
+zsh_plug "zsh-users/zsh-syntax-highlighting"
+
+if [[ -f ~/.config/zsh/.fzf.zsh ]]; then
+  source ~/.config/zsh/.fzf.zsh
+else
+
 export FZF_DEFAULT_OPTS="--height 50% --layout reverse --info inline --border=double \
     --bind 'ctrl-/:change-preview-window(50%|hidden|)'"
 #   --preview 'file {}' --preview-window up,1,border-horizontal \

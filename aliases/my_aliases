@@ -4,11 +4,6 @@
 # / __/ /_/ / / / / ,< / /__  / /  __/
 #/_/  \__,_/_/ /_/_/|_|\___/_/ /\___/ 
 #                         /___/       
-gitc() {
-  git add .
-  git commit -m "$1"
-  git push
-}
 napi() {
   figlet $1 -f slant
 }
@@ -28,11 +23,11 @@ alias update='sudo nala upgrade -y && flatpak update -y && sudo nala autoremove 
 # config
 alias s='source ~/.zshrc'
 alias vs='nvim ~/.zshrc'
-alias h='history -i'
+alias h='history -i -n 100 | bat -pl log'
 alias e='exit'
 
 alias r='ranger'
-alias cat='bat'
+alias cat='bat -f'
 alias v='nvim'
 alias sv='sudo nvim'
 alias l='lvim'
