@@ -8,29 +8,6 @@
 #  # | KUBERNETES configuration         time4Linux | #
 #  # +---------------------------------------------+ #
 # 
-source zsh_plug
-MY_FILES="$HOME/t4Linux/dotfiles/zsh"
-
-if ! [[ -d $MY_FILES/fzf ]]; then
-  a=prefix=\'~/.fzf\'
-  b=prefix=
-  c=$MY_FILES/fzf
-  bash  zsh_plug "junegunn/fzf"
-  sed -ie "s@$a@$b$c@g" $MY_FILES/fzf/install 
-  bash  $MY_FILES/fzf/install --all --completion --no-fish --no-bash
-  mv ~/.fzf.zsh $MY_FILES/settings/fzf.zsh
-  rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
-  . $MY_FILES/fzf.zsh
-else
-  . $MY_FILES/fzf.zsh
-fi
-
-zsh_plug "Aloxaf/fzf-tab"
-zsh_plug "bigH/git-fuzzy"
-zsh_plug "romkatv/powerlevel10k"
-zsh_plug "zsh-users/zsh-completions"
-zsh_plug "zsh-users/zsh-history-substring-search"
-zsh_plug "zsh-users/zsh-syntax-highlighting"
 
 if [[ -f ~/.config/zsh/.fzf.zsh ]]; then
   source ~/.config/zsh/.fzf.zsh
@@ -73,19 +50,18 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':autocomplete:tab:*' fzf-completion yes
 zstyle ':completion:*' fzf-search-display true
 
-[[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]] \
-  && source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-[[ -f ~/.config/zsh/fzf/shell/key-bindings.zsh ]] \
-  && source ~/.config/zsh/fzf/shell/key-bindings.zsh
-[[ -d ~/.config/zsh/plugins ]] \
-  && source ~/.config/zsh/plugins/zsh-alias-finder.plugin.zsh \  # informs you in given comand has an alias
-  && source ~/.config/zsh/plugins/systemd.plugin.zsh \           # 2 times ESC puts sudo infront of command
-  && source ~/.config/zsh/plugins/watch.plugin.zsh \             # Ctrl+w puts last ommand on watch -d
-  && source ~/.config/zsh/plugins/sudo.plugin.zsh                # 2x ESC ads sudo in front 
-[[ -f ~/.config/zsh/zsh-z/zsh-z.plugin.zsh ]] \
-  && source ~/.config/zsh/zsh-z/zsh-z.plugin.zsh
-[[ -f ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ]] \
-  && source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-[[ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]] \
-  && source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
-
+[[ -f ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh ]] && \
+source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
+[[ -f ~/.config/zsh/fzf/shell/key-bindings.zsh ]] && \
+source ~/.config/zsh/fzf/shell/key-bindings.zsh
+[[ -d ~/.config/zsh/plugins ]] && \
+source ~/.config/zsh/plugins/zsh-alias-finder.plugin.zsh && \     # informs you in given comand has an alias
+source ~/.config/zsh/plugins/systemd.plugin.zsh && \              # 2 times ESC puts sudo infront of command
+source ~/.config/zsh/plugins/watch.plugin.zsh && \                # Ctrl+w puts last ommand on watch -d
+source ~/.config/zsh/plugins/sudo.plugin.zsh                      # 2x ESC ads sudo in front 
+[[ -f ~/.config/zsh/zsh-z/zsh-z.plugin.zsh ]] && \
+source ~/.config/zsh/zsh-z/zsh-z.plugin.zsh
+[[ -f ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh ]] && \
+source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+[[ -f ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh ]] && \
+source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh

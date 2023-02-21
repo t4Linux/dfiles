@@ -10,15 +10,15 @@
 # | Shelscript :  ZSH configuration file                                   | #  
 # | Version    :  1.3                                                      | #
 # +------------------------------------------------------------------------+ #                  
-MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+MY_FILES="$HOME/t4Linux/dotfiles/zsh/settings"
 
 [[ -d "$MY_FILES/setings" ]] && \ 
-. $MY_FILES/settings/path.zsh && \            # path
-. $MY_FILES/settings/editors.zsh && \         # editors
-. $MY_FILES/settings/kubectl.zsh && \         # kubernetes
-. $MY_FILES/settings/history.zsh && \         # history
-. $MY_FILES/settings/power10k.zsh && \        # power10k
-. $MY_FILES/settings/aliases.zsh && \         # aliases
-. $MY_FILES/settings/plugins.zsh && \         # plugins
-. $MY_FILES/settings/basic.zsh.zsh            # basic zsh config
-. $MY_FILES/settings/manjaro-zsh-config && \  # manjaro
+. $MY_FILES/path.zsh && \            # path
+. $MY_FILES/editors.zsh && \         # editors
+. $MY_FILES/kubectl.zsh && \         # kubernetes
+. $MY_FILES/history.zsh && \         # history
+. $MY_FILES/power10k.zsh && \        # power10k
+. $MY_FILES/aliases.zsh && \         # aliases
+. $MY_FILES/plugins.zsh && \         # plugins
+. $MY_FILES/basic.zsh.zsh            # basic zsh config
+. $MY_FILES/settings/manjaro-zsh-config  # manjaro
