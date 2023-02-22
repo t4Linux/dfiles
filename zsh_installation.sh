@@ -9,7 +9,10 @@
 # |  Description: ZSH configuration          2023-02-21  | #
 # +---------------------------------------- 2023-02-21 --+ #
 MY_FILES="$HOME/t4Linux/dotfiles/zsh"
-source $MY_FILES/settings/zsh_plug
+
+zsh_plug(){
+  git -C $MY_FILES clone https://github.com/$1.git
+}
 
 if ! [[ -d $MY_FILES/fzf ]]; then
   a=prefix=\'~/.fzf\'
@@ -51,4 +54,8 @@ fi
 
 if [[ -f $HOME/.zshrc ]]; then
   rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
+fi
+
+if ! [[ -l ~/.config/zsh ]]; then
+  ln -s $HOME/t4Linux/dotfiles/zsh/ $HOME/.config/zsh
 fi
