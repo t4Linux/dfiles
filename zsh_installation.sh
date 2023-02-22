@@ -18,38 +18,38 @@ if ! [[ -d $MY_FILES/fzf ]]; then
   a=prefix=\'~/.fzf\'
   b=prefix=
   c=$MY_FILES/fzf
-  bash  zsh_plug "junegunn/fzf"
+  zsh_plug "junegunn/fzf"
   sed -ie "s@$a@$b$c@g" $MY_FILES/fzf/install 
-  bash  $MY_FILES/fzf/install --all --completion --no-fish --no-bash
+  $MY_FILES/fzf/install --all --completion --no-fish --no-bash
   mv ~/.fzf.zsh $MY_FILES/settings/fzf.zsh
 fi
 
 if ! [[ -d $MY_FILES/fzf-tab ]]; then
-  bash zsh_plug "Aloxaf/fzf-tab"
+  zsh_plug "Aloxaf/fzf-tab"
 fi
 
 if ! [[ -d $MY_FILES/zsh-autosuggestions ]]; then
-  bash zsh_plug "zsh-users/zsh-autosuggestions"
+  zsh_plug "zsh-users/zsh-autosuggestions"
 fi
 
 if ! [[ -d $MY_FILES/zsh-completions ]]; then
-  bash zsh_plug "zsh-users/zsh-completions"
+  zsh_plug "zsh-users/zsh-completions"
 fi
 
 if ! [[ -d $MY_FILES/zsh-syntax-highlighting ]]; then
-  bash zsh_plug "zsh-users/zsh-syntax-highlighting"
+  zsh_plug "zsh-users/zsh-syntax-highlighting"
 fi
 
 if ! [[ -d $MY_FILES/powerlevel10k ]]; then
-  bash zsh_plug "romkatv/powerlevel10k"
+  zsh_plug "romkatv/powerlevel10k"
 fi
 
 if ! [[ -d $MY_FILES/git-fuzzy ]]; then
-  bash zsh_plug "bigH/git-fuzzy"
+  zsh_plug "bigH/git-fuzzy"
 fi
 
 if ! [[ -d $MY_FILES/zsh-history-substring-search ]]; then
-  bash zsh_plug "zsh-users/zsh-history-substring-search"
+  zsh_plug "zsh-users/zsh-history-substring-search"
 fi
 
 if [[ -f $HOME/.zshrc ]]; then
