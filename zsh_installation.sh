@@ -22,22 +22,33 @@ if ! [[ -d $MY_FILES/fzf ]]; then
 fi
 
 if ! [[ -d $MY_FILES/fzf-tab ]]; then
-bash zsh_plug "Aloxaf/fzf-tab"
+  bash zsh_plug "Aloxaf/fzf-tab"
 fi
 
-if ! [[ -d $MY_FILES/fzf-tab ]]; then
-bash zsh_plug "bigH/git-fuzzy"
+if ! [[ -d $MY_FILES/zsh-autosuggestions ]]; then
+  bash zsh_plug "zsh-users/zsh-autosuggestions"
+fi
+
+if ! [[ -d $MY_FILES/zsh-completions ]]; then
+  bash zsh_plug "zsh-users/zsh-completions"
+fi
+
+if ! [[ -d $MY_FILES/zsh-syntax-highlighting ]]; then
+  bash zsh_plug "zsh-users/zsh-syntax-highlighting"
 fi
 
 if ! [[ -d $MY_FILES/powerlevel10k ]]; then
-bash zsh_plug "romkatv/powerlevel10k"
+  bash zsh_plug "romkatv/powerlevel10k"
 fi
 
-zsh_plug "zsh-users/zsh-completions"
-zsh_plug "zsh-users/zsh-history-substring-search"
-zsh_plug "zsh-users/zsh-syntax-highlighting"
+if ! [[ -d $MY_FILES/git-fuzzy ]]; then
+  bash zsh_plug "bigH/git-fuzzy"
+fi
 
+if ! [[ -d $MY_FILES/zsh-history-substring-search ]]; then
+  bash zsh_plug "zsh-users/zsh-history-substring-search"
+fi
+
+if [[ -f $HOME/.zshrc ]]; then
   rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
-  . $MY_FILES/settings/fzf.zsh
-else
-  . $MY_FILES/settings/fzf.zsh
+fi

@@ -9,8 +9,8 @@
 #  # +---------------------------------------------+ #
 # 
 
-if [[ -f ~/.config/zsh/.fzf.zsh ]]; then
-  source ~/.config/zsh/.fzf.zsh
+if [[ -f ~/.config/zsh/settings/fzf.zsh ]]; then
+  source ~/.config/zsh/settings/fzf.zsh
 else
 
 export FZF_DEFAULT_OPTS="--height 50% --layout reverse --info inline --border=double \
