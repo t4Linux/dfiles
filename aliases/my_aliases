@@ -58,8 +58,8 @@ alias ping='ping -c 3'
 alias tree='tree -C'
 alias nface='sudo nmcli conn'
 
-alias ll='exa -lgG --group-directories-first --icons --color-scale --time-style=long-iso'
-alias la='exa -lgaG --group-directories-first --icons --color-scale --time-style=long-iso'
+alias ll='exa -lg --group-directories-first --icons --color-scale --time-style=long-iso'
+alias la='exa -lga --group-directories-first --icons --color-scale --time-style=long-iso'
 
 alias m='minikube'
 alias d='docker'

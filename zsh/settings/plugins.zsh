@@ -2,13 +2,13 @@
 #  # | created by: achmur          __  __ __  __   | #
 #  # |                            / /_/ // / / /   | #
 #  # | created on: 2022-12-13    / __/ // /_/ /    | #
-#  # | updated on: 2023-02-05   / /_/__  __/ /___  | #
+#  # | updated on: 2023-02-23   / /_/__  __/ /___  | #
 #  # |                          \__/  /_/ /_____/  | #
 #  # | KUBERNETES configuration         time4Linux | #
 #  # +---------------------------------------------+ #
 # 
 
-[[ -f ~/.config/zsh/settings/fzf.zsh ]] &&\
+[[ ! -f ~/.config/zsh/settings/fzf.zsh ]] || \
 source ~/.config/zsh/settings/fzf.zsh
 
 export FZF_DEFAULT_OPTS="--height 50% --layout reverse --info inline --border=double \
@@ -48,22 +48,22 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':autocomplete:tab:*' fzf-completion yes
 zstyle ':completion:*' fzf-search-display true
 
-[[ -d ~/.config/zsh/fzf-tab ]] && \
+[[ ! -d ~/.config/zsh/fzf-tab ]] || \
 source ~/.config/zsh/fzf-tab/fzf-tab.plugin.zsh
-[[ -d ~/.config/zsh/fzf ]] && \
+[[ ! -d ~/.config/zsh/fzf ]] || \
 source ~/.config/zsh/fzf/shell/key-bindings.zsh
-[[ -d ~/.config/zsh/plugins ]] && \
+[[ ! -d ~/.config/zsh/plugins ]] || \
 # informs you in given comand has an alias
-source ~/.config/zsh/plugins/zsh-alias-finder.plugin.zsh && \
+(source ~/.config/zsh/plugins/zsh-alias-finder.plugin.zsh && \
 # 2 times ESC puts sudo infront of command
 source ~/.config/zsh/plugins/systemd.plugin.zsh && \
 # Ctrl+w puts last ommand on watch -d
 source ~/.config/zsh/plugins/watch.plugin.zsh && \
 # 2x ESC ads sudo in front 
-source ~/.config/zsh/plugins/sudo.plugin.zsh                      
-[[ -d ~/.config/zsh/zsh-z ]] && \
+source ~/.config/zsh/plugins/sudo.plugin.zsh)                      
+[[ ! -d ~/.config/zsh/zsh-z ]] || \
 source ~/.config/zsh/zsh-z/zsh-z.plugin.zsh
-[[ -d ~/.config/zsh/zsh-autosuggestions ]] && \
+[[ ! -d ~/.config/zsh/zsh-autosuggestions ]] || \
 source ~/.config/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
-[[ -d ~/.config/zsh/zsh-syntax-highlighting ]] && \
+[[ ! -d ~/.config/zsh/zsh-syntax-highlighting ]] || \
 source ~/.config/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
