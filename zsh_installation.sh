@@ -8,11 +8,18 @@
 # |                                       /_/            | #
 # |  Description: ZSH configuration          2023-02-21  | #
 # +---------------------------------------- 2023-02-21 --+ #
-MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+MY_FILES="$HOME/dotfiles/zsh"
 
 zsh_plug(){
   git -C $MY_FILES clone https://github.com/$1.git
 }
+
+if ! [[ -d $HOME/dotfiles/ ]]; then
+mkdir -p $HOME/dotfiles/
+REPO=$(pwd)
+cp -r $REPO/zsh $HOME/dotfiles
+
+fi
 
 if ! [[ -d $MY_FILES/fzf ]]; then
   a=prefix=\'~/.fzf\'

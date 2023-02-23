@@ -1,4 +1,3 @@
-#!/bin/env bash
 # +-- created by: achmur -------------- time4Linux ------+ #
 # |     __  __ __  __    _                           __  | #
 # |    / /_/ // / / /   (_)___  __  ___  __   ____  / /  | #
@@ -7,13 +6,13 @@
 # |  \__/  /_/ /_____/_/_/ /_/\__,_/_/|_/(_) .___/_/     | #
 # |                                       /_/            | #
 # |  Description: ZSH configuration          2023-02-17  | #
-# +---------------------------------------- 2023-02-17 --+ #
+# +---------------------------------------- 2023-02-23 --+ #
 
-#  # |    BAT
+MY_FILES="$HOME/dotfiles/zsh/plugins"
+#------------------- BAT --------------------------#
 export BAT_THEME="Coldark-Dark"
 export BAT_STYLE="header-filename,header-filesize,grid"
-#  # |    default editor
-if [[ -d $MY_FILES/plugins ]]; then
-. $MY_FILES/plugins/editor.zsh
-. $MY_FILES/plugins/run_editor
-fi
+#------------------ EDITOR ------------------------#
+[[ ! -d $MY_FILES ]] || \
+(source $MY_FILES/editor.zsh && \
+ source $MY_FILES/run_editor)
