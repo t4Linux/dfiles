@@ -56,6 +56,6 @@ if [[ -f $HOME/.zshrc ]]; then
   rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
 fi
 
-if ! [[ -l ~/.config/zsh ]]; then
+if ! [[ -L $HOME/.config/zsh ]]; then
   ln -s $HOME/t4Linux/dotfiles/zsh/ $HOME/.config/zsh
 fi

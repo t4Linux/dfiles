@@ -1,4 +1,3 @@
-#!/bin/env bash
 # +-- created by: achmur -------------- time4Linux ------------------------+ #
 # |     __  __ __  __    _                           __           .--.     | #
 # |    / /_/ // / / /   (_)___  __  ___  __   ____  / /          |ö_ö |    | #
@@ -13,14 +12,13 @@
 # +------------------------------------------------------------------------+ #                  
 MY_FILES="$HOME/t4Linux/dotfiles/zsh/settings"
 
-if [[ -d "$MY_FILES/setings" ]]; then 
-. $MY_FILES/path.zsh            # path
-. $MY_FILES/editors.zsh         # editors
-. $MY_FILES/kubectl.zsh         # kubernetes
-. $MY_FILES/history.zsh         # history
-. $MY_FILES/power10k.zsh        # power10k
-. $MY_FILES/aliases.zsh         # aliases
-. $MY_FILES/plugins.zsh         # plugins
-. $MY_FILES/basic.zsh.zsh            # basic zsh config
-. $MY_FILES/settings/manjaro-zsh-config  # manjaro
-fi
+[[ -d "$MY_FILES/settings" ]] && \
+. $MY_FILES/path.zsh && \
+. $MY_FILES/editors.zsh && \
+. $MY_FILES/kubectl.zsh && \
+. $MY_FILES/history.zsh && \
+. $MY_FILES/power10k.zsh && \
+. $MY_FILES/aliases.zsh && \
+. $MY_FILES/plugins.zsh && \
+. $MY_FILES/basic.zsh.zsh && \
+. $MY_FILES/settings/manjaro-zsh-config
