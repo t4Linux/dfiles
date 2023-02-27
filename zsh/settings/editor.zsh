@@ -5,15 +5,16 @@
 #  # created on: 2023-02-01
 #  #  Description: 
 #  #        EDITOR setting 
-. my_colors
+
+MY_FILES="$HOME/t4Linux/dotfiles/zsh"
 
 my_editors=(lvim nvim vim)
 new_editor="export EDITOR="
 new_visual="export VISUAL="
 
 set_editor(){
-  echo $new_editor$i > $HOME/dotfiles/.config/zsh/plugins/run_editor
-  echo $new_visual$i >> $HOME/dotfiles/.config/zsh/plugins/run_editor
+  echo $new_editor$i > $MY_FILES/settings/run_editor
+  echo $new_visual$i >> $MY_FILES/plugins/run_editor
   exit 0
 }
 
@@ -28,6 +29,7 @@ program_check(){
     fi
   else
     echo -e "Please install "$IGreen" vim | neovim | lunarvim "$Color_Off"to set your "$IGreen"EDITOR"$Color_Off
+    echo "You can use program to install it"
     exit 0
   fi
   }
