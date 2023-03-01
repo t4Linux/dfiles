@@ -12,7 +12,7 @@
 # +------------------------------------------------------------------------+ #                  
 MY_FILES="$HOME/t4Linux/dotfiles/zsh/settings"
 
-[[ -d "$MY_FILES/settings" ]] && \
+[[ ! -d "$MY_FILES/settings" ]] || \
 . $MY_FILES/path.zsh && \
 . $MY_FILES/editors.zsh && \
 . $MY_FILES/kubectl.zsh && \
