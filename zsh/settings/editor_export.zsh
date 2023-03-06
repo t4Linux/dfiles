@@ -7,21 +7,30 @@
 # |  \__/  /_/ /_____/_/_/ /_/\__,_/_/|_/(_) .___/_/           (|     | )  | #
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Dscr: ZSH configuration - editor setting  2023-02-01     \___)=(___// | #
-# +------------------------------------------ 2023-02-01 ------------------+ #
-#
+# +------------------------------------------ 2023-03-02 ------------------+ #
+# |  USED      - variables
+# |            - functions
+# |            - FOR look with 2 variables
+# +------------------------------------------------------------------------+ #
 MY_FILES="$HOME/t4Linux/dotfiles/zsh"
 
 my_editors=(lvim nvim vim)
+my_viewers=(bat cat)
+
 new_editor="export EDITOR="
 new_visual="export VISUAL="
+new_pager="export PAGER="
 
 set_editor(){
   echo $new_editor$i > $MY_FILES/settings/run_editor
   echo $new_visual$i >> $MY_FILES/plugins/run_editor
   exit 0
 }
+set_viewer(){
+  echo $new_pager$j >> $MY_FILES/plugins/run_editor
+}
 
-program_check(){
+editor_check(){
   if command -v $i &>/dev/null; then
     if [[ $i == lvim ]]; then
       set_editor
@@ -35,8 +44,14 @@ program_check(){
     echo "You can use program to install it"
     exit 0
   fi
+  if command -v $j &>/dev/null; then
+    if [[ $j == bat ]]; then
+      set_viewer
+    elif [[ $j == cat ]]; then
+      set_viewer
+    fi
   }
 
-for i in ${my_editors[@]}; do
-  program_check
+for i in ${my_editors[@]}, j in ${my_viewers[@]}; do
+  editor_check
 done

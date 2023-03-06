@@ -7,9 +7,9 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Description: ZSH configuration            2022-12-13     \___)=(___// | #
 # +------------------------------------------ 2023-02-23 ------------------+ #
-# | Shelscript :  ZSH configuration file                                   | #  
+# | Shelscript :  ZSH configuration file                                   | # 
 # | Version    :  1.3                                                      | #
-# +------------------------------------------------------------------------+ #                  
+# +------------------------------------------------------------------------+ #
 MY_FILES="$HOME/t4Linux/dotfiles/zsh/settings"
 
 [[ ! -d "$MY_FILES/settings" ]] || \
