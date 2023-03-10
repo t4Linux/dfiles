@@ -17,12 +17,12 @@ if [ ${#} -eq 0 ]; then
 else
 
 # |------------------------ setting dir location --------------------------| #
-  MY_FILES="$HOME/$1"
+  MY_FILES="$HOME/$1/zsh"
   if [[ ! -d $MY_FILES ]]; then
     mkdir -p $MY_FILES
 # |------------------------ copy repo files to dir ------------------------| #
   REPO=$(pwd)
-  cp -r $REPO/zsh $MY_FILES
+  cp -r $REPO/zsh/ $MY_FILES
   fi
 
 # |------------------------ zsh plugin installer --------------------------| #
