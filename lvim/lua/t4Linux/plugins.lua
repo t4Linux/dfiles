@@ -12,6 +12,19 @@ lvim.plugins = {
   "sindrets/diffview.nvim",
   event = "BufRead",
 },
+{
+  "mrjones2014/nvim-ts-rainbow",
+},
+  {
+  "kevinhwang91/rnvimr",
+    cmd = "RnvimrToggle",
+    config = function()
+      vim.g.rnvimr_draw_border = 1
+      vim.g.rnvimr_pick_enable = 1
+      vim.g.rnvimr_bw_enable = 1
+      end,
+},
+{
+  "nvim-treesitter/palyground",
+},
 }
-lvim.builtin.treesitter.rainbow.enable = true
-
