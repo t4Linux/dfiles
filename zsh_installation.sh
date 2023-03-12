@@ -23,6 +23,10 @@ else
 # |------------------------ copy repo files to dir ------------------------| #
   REPO=$(pwd)
   cp -r $REPO/zsh/ $MY_FILES
+else 
+  mv $MY_FILES $MY_FILES.bak
+  REPO=$(pwd)
+  cp -r $REPO/zsh/ $MY_FILES
   fi
 
 # |------------------------ zsh plugin installer --------------------------| #
@@ -31,7 +35,7 @@ else
   }
 
 # |------------------------ plugins installation -------------------------| #
-  if ! [[ -d $MY_FILES/fzf ]]; then
+  if [[ ! -d $MY_FILES/fzf ]]; then
     a=prefix=\'~/.fzf\'
     b=prefix=
     c=$MY_FILES/fzf
@@ -41,31 +45,31 @@ else
     mv ~/.fzf.zsh $MY_FILES/settings/fzf.zsh
   fi
 
-  if ! [[ -d $MY_FILES/fzf-tab ]]; then
+  if [[ ! -d $MY_FILES/fzf-tab ]]; then
     zsh_plug "Aloxaf/fzf-tab"
   fi
 
-  if ! [[ -d $MY_FILES/zsh-autosuggestions ]]; then
+  if [[ ! -d $MY_FILES/zsh-autosuggestions ]]; then
     zsh_plug "zsh-users/zsh-autosuggestions"
   fi
 
-  if ! [[ -d $MY_FILES/zsh-completions ]]; then
+  if [[ ! -d $MY_FILES/zsh-completions ]]; then
     zsh_plug "zsh-users/zsh-completions"
   fi
 
-  if ! [[ -d $MY_FILES/zsh-syntax-highlighting ]]; then
+  if [[ ! -d $MY_FILES/zsh-syntax-highlighting ]]; then
     zsh_plug "zsh-users/zsh-syntax-highlighting"
   fi
 
-  if ! [[ -d $MY_FILES/powerlevel10k ]]; then
+  if [[ ! -d $MY_FILES/powerlevel10k ]]; then
     zsh_plug "romkatv/powerlevel10k"
   fi
 
-  if ! [[ -d $MY_FILES/git-fuzzy ]]; then
+  if [[ ! -d $MY_FILES/git-fuzzy ]]; then
     zsh_plug "bigH/git-fuzzy"
   fi
 
-  if ! [[ -d $MY_FILES/zsh-history-substring-search ]]; then
+  if [[ ! -d $MY_FILES/zsh-history-substring-search ]]; then
     zsh_plug "zsh-users/zsh-history-substring-search"
   fi
 
@@ -73,7 +77,7 @@ else
     rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
   fi
 
-  if ! [[ -L $HOME/.config/zsh ]]; then
+  if [[ ! -L $HOME/.config/zsh ]]; then
     ln -s $HOME/t4Linux/dotfiles/zsh/ $HOME/.config/zsh
   fi
 fi
