@@ -46,6 +46,7 @@ editor_check(){
   fi
   if command -v $j &>/dev/null; then
     if [[ $j == bat ]]; then
+      j='bat --paging=always --pager="less -Rc"'
       set_viewer
     elif [[ $j == cat ]]; then
       set_viewer
