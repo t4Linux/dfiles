@@ -11,13 +11,104 @@
 # |  Description :                                                         | # 
 # |                                                                        | #
 # +------------------------------------------------------------------------+ #
-. my_colors
-DFILES=$HOME/dotfiles
-CFILES=$HOME/.config/
+IGreen='\033[0;92m'
+IYellow='\033[0;93m'
+Yellow='\033[0;33m'
+BIRed='\033[1;91m'
+IPurple='\033[0;95m'
+Color_Off='\033[0m'
+
+DFILES=$HOME/dfiles
+CFILES=$HOME/.config
+BFILES=$HOME/dfiles_backup
+
 my_dfiles_for_progs=(mc ranger vifm terminator)
+my_dfiles_for_other=(gitconfig zsh)
 # ========================================================================== #
 #                             FUNCTIONS                                      #
 # ========================================================================== #
+
+# messages
+info(){
+  echo -e $Yellow"Info: "$Color_Off$1
+}
+
+success(){
+  echo -e $IGreen$1$Color_Off
+}
+
+error(){
+  echo -e $BIRed"Error: "$Color_Off$1
+}
+
+warn (){
+  echo -e $IPurple"Warning: "$Color_Off$1
+}
+
+# creating backups 
+bak_files(){
+  if [[ -d $BFILES ]]; then
+    # checking if bak_files already exists
+    if [[ ! -z "ls -A $BFILES" ]]; then
+      warn "$(basename $BFILES) is not empty, please check the files and empty the $(basename $BFILES)"
+      exit 1
+    fi
+  else
+    mkdir -p $BFILES
+    # moving files
+    for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
+      TARGET_P=$CFILES/$p
+      TARGET_O=$HOME/.$o
+      if [[ -d $TARGET_P ]]; then
+      mv $TARGET_P $BFILES
+      info "$p moved to $(basename $BFILES)"
+      fi
+      if [[ -e $TARGET_O ]]; then
+      mv $TARGET_O $BFILES
+      info "$o moved to $(basename $BFILES)"
+      fi
+    done
+    if [[ -d $CFILES/lvim/lua ]]; then
+      mv $CFILES/lvim/lua $BFILES
+      info "lvim config moved to $(basename $BFILES)"
+    fi
+  }
+
+ln_progs(){
+  if ! command -v $p &>/dev/null; then
+    info "Installing $p..."
+    sudo apt install -y $p
+    if [[ -d $CFILES/$p ]]; then
+      rm -fr $CFILES/$p
+      ln -s $(pwd)/$p $CFILES/$p
+    fi
+  else
+    if [[ -L $CFILES/$p ]]; then
+      rm $CFILES/$p
+      ln -s $(pwd)/$p $CFILES/$p
+      warn "Symlink for $p already existed."
+      warn "This link was removed and created a new one."
+    fi
+  fi
+}
+
+ln_other(){
+  if [[ -f ]]
+    info "Installing $p..."
+    sudo apt install -y $p
+    if [[ -d $CFILES/$p ]]; then
+      rm -fr $CFILES/$p
+      ln -s $(pwd)/$p $CFILES/$p
+    fi
+  else
+    if [[ -L $CFILES/$p ]]; then
+      rm $CFILES/$p
+      ln -s $(pwd)/$p $CFILES/$p
+      warn "Symlink for $p already existed."
+      warn "This link was removed and created a new one."
+    fi
+  fi
+}
 lg(){
   if [[ ! -e /usr/local/bin/lazygit ]]; then
     if ! command -v git $>/dev/null; then
@@ -33,24 +124,6 @@ lg(){
     echo "Lazygit installation successful"
   else
     echo "Lazygit already installed"
-  fi
-}
-
-ln_dfiles(){
-  if ! command -v $i &>/dev/null; then
-    echo "Installing $i..."
-    sudo apt install -y $i
-    if [[ -d $CFILES/$i ]]; then
-      rm -fr $CFILES/$i
-      ln -s $(pwd)/$i $CFILES/$i
-    fi
-  else
-    if [[ -d $CFILES/$i ]]; then
-      mv $CFILES/$i $CFILES/$i.bak
-      ln -s $(pwd)/$i $CFILES/$i
-    elif [[ -L CFILES/$i ]]; then
-      echo "Symlink for $i already exists"
-    fi
   fi
 }
 
@@ -169,11 +242,6 @@ lunarvim(){
 #                          other symlinks                                    #
 # ========================================================================== #
 # creating basic folder
-if [[ -d $DFILES ]]; then
-  mv $DFILES $DFILES.bak 
-else
-  mkdir -p $DFILES
-fi
 lg
 delta
 bat
