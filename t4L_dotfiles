@@ -21,6 +21,9 @@ Color_Off='\033[0m'
 DFILES=$HOME/dfiles
 CFILES=$HOME/.config
 BFILES=$HOME/dfiles_backup
+BF_FOLDER=$BFILES/$(date +%Y-%m-%d)
+TARGET_P=$CFILES/$p
+TARGET_O=$HOME/.$o
 
 my_dfiles_for_progs=(mc ranger vifm terminator)
 my_dfiles_for_other=(gitconfig zsh)
@@ -47,6 +50,26 @@ warn (){
 
 # creating backups 
 bak_files(){
+  if [[ ! -d $BFILES ]]; then
+    mkdir -p $BF_FOLDER
+    # moving files
+    for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
+      if [[ -d $TARGET_P ]]; then
+      mv $TARGET_P $BF_FOLDER
+      info "$p moved to $(basename $BF_FOLDER)"
+      fi
+      if [[ -e $TARGET_O ]]; then
+      mv $TARGET_O $BFILES
+      info ".$o moved to $(basename $BFILES)"
+      fi
+    done
+    if [[ -d $CFILES/lvim/lua ]]; then
+      mv $CFILES/lvim/lua $BFILES
+      info "lvim config moved to $(basename $BFILES)"
+    fi
+
+
+
   if [[ -d $BFILES ]]; then
     # checking if bak_files already exists
     if [[ ! -z "ls -A $BFILES" ]]; then
@@ -65,7 +88,7 @@ bak_files(){
       fi
       if [[ -e $TARGET_O ]]; then
       mv $TARGET_O $BFILES
-      info "$o moved to $(basename $BFILES)"
+      info ".$o moved to $(basename $BFILES)"
       fi
     done
     if [[ -d $CFILES/lvim/lua ]]; then
@@ -74,35 +97,34 @@ bak_files(){
     fi
   }
 
-ln_progs(){
-  if ! command -v $p &>/dev/null; then
-    info "Installing $p..."
-    sudo apt install -y $p
-    if [[ -d $CFILES/$p ]]; then
-      rm -fr $CFILES/$p
-      ln -s $(pwd)/$p $CFILES/$p
+  ln_progs(){
+    TARGET_P=$CFILES/$p
+    if ! command -v $p &>/dev/null; then
+      info "Installing $p..."
+      sudo apt install -y $p
+      if [[ -d $TARGET_P ]]; then
+        rm -fr $TARGET_P
+        ln -s $(pwd)/$p $TARGET_P
+      fi
+    else
+      if [[ -L $TARGET_P ]]; then
+        rm $TARGET_P
+        ln -s $(pwd)/$p $TARGET_P
+        warn "Existing symlink for $p removed and created new one."
+      fi
     fi
-  else
-    if [[ -L $CFILES/$p ]]; then
-      rm $CFILES/$p
-      ln -s $(pwd)/$p $CFILES/$p
-      warn "Symlink for $p already existed."
-      warn "This link was removed and created a new one."
-    fi
-  fi
-}
+  }
 
 ln_other(){
-  if [[ -f ]]
-    info "Installing $p..."
-    sudo apt install -y $p
-    if [[ -d $CFILES/$p ]]; then
-      rm -fr $CFILES/$p
-      ln -s $(pwd)/$p $CFILES/$p
+  TARGET_O=$HOME/.$o
+  if [[ -f $TARGET_O ]]
+      rm $TARGET_O
+      ln -s $(pwd)/$o $TARGET_O
+        warn "Existing file for $o moved e."
     fi
   else
-    if [[ -L $CFILES/$p ]]; then
-      rm $CFILES/$p
+    if [[ -L $TARGET_O ]]; then
+      rm $TARGET_O
       ln -s $(pwd)/$p $CFILES/$p
       warn "Symlink for $p already existed."
       warn "This link was removed and created a new one."
