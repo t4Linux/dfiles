@@ -24,6 +24,8 @@ BFILES=$HOME/dfiles_backup
 BF_FOLDER=$BFILES/$(date +%Y-%m-%d)
 TARGET_P=$CFILES/$p
 TARGET_O=$HOME/.$o
+ZFILES="$HOME/dfiles/zsh"
+REPO=$(pwd)
 
 my_dfiles_for_progs=(mc ranger vifm terminator)
 my_dfiles_for_other=(gitconfig zsh)
@@ -48,89 +50,62 @@ warn (){
   echo -e $IPurple"Warning: "$Color_Off$1
 }
 
+df_start(){
+  if [[ ! -d $DFILES ]]; then
+    mkdir -p $DFILES
+    cp -r $REPO/zsh/ $DFILES
+  else 
+    mv $DFILES $DFILES.bak
+    cp -r $REPO/zsh/ $MY_FILES
+  fi
+}
+
 # creating backups 
 bak_files(){
-  if [[ ! -d $BFILES ]]; then
+  if [[ ! -d $BFILES ]]; then
     mkdir -p $BF_FOLDER
     # moving files
     for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
       if [[ -d $TARGET_P ]]; then
-      mv $TARGET_P $BF_FOLDER
-      info "$p moved to $(basename $BF_FOLDER)"
+        mv $TARGET_P $BF_FOLDER
+        info "$p moved to $(basename $BFILES)/$(basename $BF_FOLDER)"
       fi
       if [[ -e $TARGET_O ]]; then
-      mv $TARGET_O $BFILES
-      info ".$o moved to $(basename $BFILES)"
+        mv $TARGET_O $BFILES
+        info ".$o moved to $(basename $BFILES)/$(basename $BFILES)"
       fi
     done
     if [[ -d $CFILES/lvim/lua ]]; then
       mv $CFILES/lvim/lua $BFILES
-      info "lvim config moved to $(basename $BFILES)"
-    fi
-
-
-
-  if [[ -d $BFILES ]]; then
-    # checking if bak_files already exists
-    if [[ ! -z "ls -A $BFILES" ]]; then
-      warn "$(basename $BFILES) is not empty, please check the files and empty the $(basename $BFILES)"
-      exit 1
-    fi
-  else
-    mkdir -p $BFILES
-    # moving files
-    for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
-      TARGET_P=$CFILES/$p
-      TARGET_O=$HOME/.$o
-      if [[ -d $TARGET_P ]]; then
-      mv $TARGET_P $BFILES
-      info "$p moved to $(basename $BFILES)"
-      fi
-      if [[ -e $TARGET_O ]]; then
-      mv $TARGET_O $BFILES
-      info ".$o moved to $(basename $BFILES)"
-      fi
-    done
-    if [[ -d $CFILES/lvim/lua ]]; then
-      mv $CFILES/lvim/lua $BFILES
-      info "lvim config moved to $(basename $BFILES)"
-    fi
-  }
-
-  ln_progs(){
-    TARGET_P=$CFILES/$p
-    if ! command -v $p &>/dev/null; then
-      info "Installing $p..."
-      sudo apt install -y $p
-      if [[ -d $TARGET_P ]]; then
-        rm -fr $TARGET_P
-        ln -s $(pwd)/$p $TARGET_P
-      fi
-    else
-      if [[ -L $TARGET_P ]]; then
-        rm $TARGET_P
-        ln -s $(pwd)/$p $TARGET_P
-        warn "Existing symlink for $p removed and created new one."
-      fi
-    fi
-  }
-
-ln_other(){
-  TARGET_O=$HOME/.$o
-  if [[ -f $TARGET_O ]]
-      rm $TARGET_O
-      ln -s $(pwd)/$o $TARGET_O
-        warn "Existing file for $o moved e."
-    fi
-  else
-    if [[ -L $TARGET_O ]]; then
-      rm $TARGET_O
-      ln -s $(pwd)/$p $CFILES/$p
-      warn "Symlink for $p already existed."
-      warn "This link was removed and created a new one."
+      info "lvim config moved to $(basename $BFILES)/$(basename $BFILES)"
     fi
   fi
 }
+
+ln_progs(){
+  if ! command -v $p &>/dev/null; then
+    info "Installing $p..."
+    sudo apt install -y $p
+    if [[ -d $TARGET_P ]]; then
+      rm -fr $TARGET_P
+      ln -s $REPO/$p $TARGET_P
+    elif [[ -L $TARGET_P ]]; then
+      rm $TARGET_P
+      ln -s $REPO/$p $TARGET_P
+      warn "Existing symlink for $p removed and created new one."
+    fi
+  fi
+}
+
+ln_other(){
+  if [[ -f $TARGET_O ]]
+    rm $TARGET_O
+    warn "Existing file for $o replaced."
+  else
+    ln -s $REPO/$o $TARGET_O
+  fi
+}
+
 lg(){
   if [[ ! -e /usr/local/bin/lazygit ]]; then
     if ! command -v git $>/dev/null; then
@@ -211,73 +186,267 @@ neovim(){
     echo -e "\nZainstalowano neovim"
     fi
   }
-rust(){
-  if command -v rustc &>/dev/null; then 
-    # checking for rust version installed
-    ver=$(rustc --version | awk '{print $2}' | awk -F . '{print $1$2}')
-    if (( $ver <= "164" )); then
-      sudo apt remove -y rustc
+
+  rust(){
+    if command -v rustc &>/dev/null; then 
+      # checking for rust version installed
+      ver=$(rustc --version | awk '{print $2}' | awk -F . '{print $1$2}')
+      if (( $ver <= "164" )); then
+        sudo apt remove -y rustc
+        curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
+        echo -e "\nZainstalowano najnowszą wersję "$IGreen"rust "${ver:0:1}.${ver:1}".0"$Color_Off
+      elif (( $ver > "164" )); then
+        echo -e "\nZainstalowana wersja rust jest wystarczająca."
+      fi
+    else
       curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-      echo -e "\nZainstalowano najnowszą wersję "$IGreen"rust "${ver:0:1}.${ver:1}".0"$Color_Off
-    elif (( $ver > "164" )); then
-      echo -e "\nZainstalowana wersja rust jest wystarczająca."
+      echo -e "\nZainstalowano "$IGreen"rust "${ver:0:1}.${ver:1}".0"$Color_Off
     fi
-  else
-    curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
-    echo -e "\nZainstalowano "$IGreen"rust "${ver:0:1}.${ver:1}".0"$Color_Off
-  fi
-}
-golang(){
-  if ! [[ -d /usr/local/go ]]; then
-    cd $HOME/tmp
-    wget https://go.dev/dl/go1.20.2.linux-amd64.tar.gz
-    sudo tar -C /usr/local -xvf $HOME/tmp/go1.20.2.linux-amd64.tar.gz
-    export PATH=$PATH:/usr/local/go/bin
-    rm $HOME/tmp/go1.20.2.linux-amd64.tar.gz
-    echo "Zainstalowano Golang"
-  else 
-    echo "Golang zainstalowany, instalacja pominięta"
-  fi
-}
+  }
+  golang(){
+    if ! [[ -d /usr/local/go ]]; then
+      cd $HOME/tmp
+      wget https://go.dev/dl/go1.20.2.linux-amd64.tar.gz
+      sudo tar -C /usr/local -xvf $HOME/tmp/go1.20.2.linux-amd64.tar.gz
+      export PATH=$PATH:/usr/local/go/bin
+      rm $HOME/tmp/go1.20.2.linux-amd64.tar.gz
+      echo "Zainstalowano Golang"
+    else 
+      echo "Golang zainstalowany, instalacja pominięta"
+    fi
+  }
   # lunarvim dependencies
-lvim_dep(){
-  if command -v nala &>/dev/null; then
-    sudo nala update && sudo nala install -y npm pip ripgrep cargo git make python3 nodejs fd-find
-  else
-    sudo apt update && sudo apt install -y npm pip ripgrep cargo git make python3 nodejs fd-find
+  lvim_dep(){
+    if command -v nala &>/dev/null; then
+      sudo nala update && sudo nala install -y npm pip ripgrep cargo git make python3 nodejs fd-find
+    else
+      sudo apt update && sudo apt install -y npm pip ripgrep cargo git make python3 nodejs fd-find
+    fi
+  }
+  lunarvim(){
+    neovim
+    lvim_dep
+    npm i tree-sitter-cli
+    pip install pynvim
+    # lunarvim testing and installation 
+    if [[ -d $HOME/.config/lvim ]]; then
+      echo "LunarVim already installed" 
+    else
+      LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/fc6873809934917b470bff1b072171879899a36b/utils/installer/install.sh)
+      echo "LunarVim installed successfuly"
+    fi
+  }
+  # |------------------------ zsh plugin installer --------------------------| #
+  zsh_plug(){
+    git -C $ZFILES clone https://github.com/$1.git
+  }
+
+# |------------------------ plugins installation -------------------------| #
+zsh_install(){
+  if ! command -v zsh &>/dev/null; then
+    sudo apt install -y zsh
   fi
-}
-lunarvim(){
-  neovim
-  lvim_dep
-  npm i tree-sitter-cli
-  pip install pynvim
-  # lunarvim testing and installation 
-  if [[ -d $HOME/.config/lvim ]]; then
-    echo "LunarVim already installed" 
-  else
-    LV_BRANCH='release-1.2/neovim-0.8' bash <(curl -s https://raw.githubusercontent.com/lunarvim/lunarvim/fc6873809934917b470bff1b072171879899a36b/utils/installer/install.sh)
-    echo "LunarVim installed successfuly"
+  if [[ ! -d $ZFILES/fzf ]]; then
+    a=prefix=\'~/.fzf\'
+    b=prefix=
+    c=$ZFILES/fzf
+    zsh_plug "junegunn/fzf"
+    sed -ie "s@$a@$b$c@g" $ZFILES/fzf/install 
+    $ZFILES/fzf/install --all --completion --no-fish --no-bash
+    mv ~/.fzf.zsh $ZFILES/settings/fzf.zsh
+  fi
+
+  if [[ ! -d $ZFILES/fzf-tab ]]; then
+    zsh_plug "Aloxaf/fzf-tab"
+  fi
+
+  if [[ ! -d $ZFILES/zsh-autosuggestions ]]; then
+    zsh_plug "zsh-users/zsh-autosuggestions"
+  fi
+
+  if [[ ! -d $ZFILES/zsh-completions ]]; then
+    zsh_plug "zsh-users/zsh-completions"
+  fi
+
+  if [[ ! -d $ZFILES/zsh-syntax-highlighting ]]; then
+    zsh_plug "zsh-users/zsh-syntax-highlighting"
+  fi
+
+  if [[ ! -d $ZFILES/powerlevel10k ]]; then
+    zsh_plug "romkatv/powerlevel10k"
+  fi
+
+  if [[ ! -d $ZFILES/git-fuzzy ]]; then
+    zsh_plug "bigH/git-fuzzy"
+  fi
+
+  if [[ ! -d $ZFILES/zsh-history-substring-search ]]; then
+    zsh_plug "zsh-users/zsh-history-substring-search"
+  fi
+
+  if [[ -f $HOME/.zshrc ]]; then
+    rm ~/.zshrc && ln -s $ZFILES/zshrc $HOME/.zshrc 
+  fi
+
+  if [[ ! -L $CFILES/zsh ]]; then
+    ln -s $REPO/zsh/ $CFILES/zsh
+  fi
   fi
 }
 # ========================================================================== #
 #                          other symlinks                                    #
 # ========================================================================== #
 # creating basic folder
-lg
-delta
-bat
-rust
-golang
-lunarvim
-# symlinks other then in .config
-ln -s $(pwd)/aliases $DFILES/aliases
-ln -s $(pwd)/lazygit $CFILES/lazygit
-ln -s $(pwd)/.gitconfig $HOME/.gitconfig
 
 # ========================================================================== #
 #                        symlinks for programs                               #
+# ==============<Up>============================================================ #
+
+menu(){
+  echo -e "\nPick progrom from the list to install...
+  1) Backup dotfiles
+  2) Create new dfiles
+  3) Prepare zsh configuration
+  4) Install programs 
+  "$IGreen"0) Quit\n"$Color_Off
+}
+
+menu_progs(){
+  echo -e "\nPick progrom from the list to install...
+  1) lazygit
+  2) docker
+  3) lazydocker & docker
+  4) delta
+  5) bat
+  6) NeoVim
+  7) LunarVim
+  8) Rust       
+  9) Golang     
+  "$IGreen"0) Quit\n"$Color_Off
+}
+# ########################################################################## #
 # ========================================================================== #
-for i in ${my_dfiles_for_progs[@]}; do
-  ln_dfiles
+#                            CASE statement                                  #
+# ========================================================================== #
+# ########################################################################## #
+
+menu
+repeat=true
+while [ "$repeat" = true ]; do
+  repeat=false
+  read -s -n 1 NUMBER
+  while true; do
+    case $NUMBER in
+      0) exit 0 ;;
+      1) 
+        repeat=true
+        bak_files
+        menu
+        break
+        ;;
+      2) 
+        repeat=true
+        df_start
+        ln_progs
+        ln_other
+        if [[ ! -L $DFILES/aliases ]]; then
+          ln -s $REPO/aliases $DFILES/aliases
+        fi
+        menu
+        break 
+        ;;
+      3) 
+        repeat=true
+        zsh_install
+        menu
+        break 
+        ;;
+      4) 
+        repeat=true
+        menu_progs
+        repeat_progs=true
+        while [ "$repeat_progs" = true ]; do
+          repeat_progs=false
+          read -s -n 1 NUMBER_PROGS
+          while true; do
+            case $NUMBER_PROGS in
+              0) exit 0 ;;
+              1) 
+                repeat_progs=true
+                lg  
+                menu
+                break
+                ;;
+              2) 
+                repeat_progs=true
+                dcr
+                menu
+                break 
+                ;;
+              3) 
+                repeat_progs=true
+                lzd
+                menu
+                break 
+                ;;
+              4) 
+                repeat_progs=true
+                delta
+                menu
+                break 
+                ;;
+              5) 
+                repeat_progs=true
+                bat
+                menu
+                break 
+                ;;
+              6) 
+                repeat_progs=true
+                neovim
+                menu
+                break 
+                ;;
+              7) 
+                repeat_progs=true
+                lvim_dep
+                lunarvim
+                menu
+                break 
+                ;;
+              8) 
+                repeat_progs=true
+                rust
+                break 
+                ;;
+              9) 
+                repeat_progs=true
+                golang
+                break 
+                ;;
+              *) 
+                repeat_progs=true
+                echo -e $IRed"Are you bind or drunk?" $IYellow$NUMBER_PROGS$Color_Off$IRed" is invalid choice."
+                echo -e "Pick the right number..."$Color_Off
+                menu
+                break 
+                ;;
+            esac
+          done
+        done
+        menu
+        break 
+        ;;
+      *) 
+        repeat=true
+        echo -e $IRed"Are you bind or drunk?" $IYellow$NUMBER$Color_Off$IRed" is invalid choice."
+        echo -e "Pick the right number..."$Color_Off
+        menu
+        break 
+        ;;
+    esac
+  done
 done
+# symlinks other then in .config
+# ln -s $(pwd)/lazygit $CFILES/lazygit
+# ln -s $(pwd)/.gitconfig $HOME/.gitconfig
