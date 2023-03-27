@@ -23,7 +23,7 @@ CFILES=$HOME/.config
 BFILES=$HOME/dfiles_backup
 BF_FOLDER=$BFILES/$(date +%Y-%m-%d)
 TARGET_P=$CFILES/$p
-TARGET_O=$HOME/.$o
+TARGET_O='$HOME/."$o"'
 ZFILES="$HOME/dfiles/zsh"
 REPO=$(pwd)
 
@@ -62,23 +62,28 @@ df_start(){
 
 # creating backups 
 bak_files(){
+  TARGET_P='$CFILES/$p'
+  TARGET_O='$HOME/."$o"'
   if [[ ! -d $BFILES ]]; then
     mkdir -p $BF_FOLDER
-    # moving files
-    for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
-      if [[ -d $TARGET_P ]]; then
-        mv $TARGET_P $BF_FOLDER
-        info "$p moved to $(basename $BFILES)/$(basename $BF_FOLDER)"
-      fi
-      if [[ -e $TARGET_O ]]; then
-        mv $TARGET_O $BFILES
-        info ".$o moved to $(basename $BFILES)/$(basename $BFILES)"
-      fi
-    done
-    if [[ -d $CFILES/lvim/lua ]]; then
-      mv $CFILES/lvim/lua $BFILES
-      info "lvim config moved to $(basename $BFILES)/$(basename $BFILES)"
+  fi
+  # moving files
+  for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
+    if [[ -d $TARGET_P ]]; then
+      cp -r $TARGET_P $BF_FOLDER
+      info "$p copied to $(basename $BFILES)/$(basename $BF_FOLDER)"
+    elif [[ ! -d $TARGET_P ]]; then
+      info "There is no configuration for $p"
+    elif [[ -e $TARGET_O ]]; then
+      cp $TARGET_O $BFILES
+      info ".$o copied to $(basename $BFILES)/$(basename $BFILES)"
+    elif [[ ! -e $TARGET_O ]]; then
+      info "There was no .$o"
     fi
+  done
+  if [[ -d $CFILES/lvim/lua ]]; then
+    mv $CFILES/lvim/lua $BFILES
+    info "lvim config moved to $(basename $BFILES)/$(basename $BFILES)"
   fi
 }
 
@@ -98,7 +103,7 @@ ln_progs(){
 }
 
 ln_other(){
-  if [[ -f $TARGET_O ]]
+  if [[ -f $TARGET_O ]]; then
     rm $TARGET_O
     warn "Existing file for $o replaced."
   else
@@ -290,7 +295,6 @@ zsh_install(){
 
   if [[ ! -L $CFILES/zsh ]]; then
     ln -s $REPO/zsh/ $CFILES/zsh
-  fi
   fi
 }
 # ========================================================================== #
