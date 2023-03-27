@@ -68,16 +68,19 @@ bak_files(){
     mkdir -p $BF_FOLDER
   fi
   # moving files
-  for p in ${my_dfiles_for_progs[@]}, o in ${my_dfiles_for_other[@]}; do
+  for p in ${my_dfiles_for_progs[@]}; do
     if [[ -d $TARGET_P ]]; then
       cp -r $TARGET_P $BF_FOLDER
       info "$p copied to $(basename $BFILES)/$(basename $BF_FOLDER)"
-    elif [[ ! -d $TARGET_P ]]; then
+    else [[ ! -d $TARGET_P ]]; then
       info "There is no configuration for $p"
-    elif [[ -e $TARGET_O ]]; then
+    fi
+  done
+  for o in ${my_dfiles_for_other[@]}; do
+    if [[ -e $TARGET_O ]]; then
       cp $TARGET_O $BFILES
       info ".$o copied to $(basename $BFILES)/$(basename $BFILES)"
-    elif [[ ! -e $TARGET_O ]]; then
+    else [[ ! -e $TARGET_O ]]; then
       info "There was no .$o"
     fi
   done
