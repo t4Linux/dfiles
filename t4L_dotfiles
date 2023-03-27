@@ -62,25 +62,25 @@ df_start(){
 
 # creating backups 
 bak_files(){
-  TARGET_P='$CFILES/$p'
-  TARGET_O='$HOME/."$o"'
   if [[ ! -d $BFILES ]]; then
     mkdir -p $BF_FOLDER
   fi
   # moving files
   for p in ${my_dfiles_for_progs[@]}; do
+    TARGET_P=$HOME/.config/$p
     if [[ -d $TARGET_P ]]; then
       cp -r $TARGET_P $BF_FOLDER
       info "$p copied to $(basename $BFILES)/$(basename $BF_FOLDER)"
-    else [[ ! -d $TARGET_P ]]; then
+    else
       info "There is no configuration for $p"
     fi
   done
   for o in ${my_dfiles_for_other[@]}; do
+    TARGET_O='$HOME/."$o"'
     if [[ -e $TARGET_O ]]; then
       cp $TARGET_O $BFILES
       info ".$o copied to $(basename $BFILES)/$(basename $BFILES)"
-    else [[ ! -e $TARGET_O ]]; then
+    else
       info "There was no .$o"
     fi
   done
