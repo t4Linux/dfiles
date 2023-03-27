@@ -15,27 +15,25 @@ IGreen='\033[0;92m'
 IYellow='\033[0;93m'
 Yellow='\033[0;33m'
 BIRed='\033[1;91m'
-IPurple='\033[0;95m'
+IPurple='\033[4;1;35m'
 Color_Off='\033[0m'
 
 DFILES=$HOME/dfiles
 CFILES=$HOME/.config
 BFILES=$HOME/dfiles_backup
 BF_FOLDER=$BFILES/$(date +%Y-%m-%d)
-TARGET_P=$CFILES/$p
-TARGET_O='$HOME/."$o"'
 ZFILES="$HOME/dfiles/zsh"
 REPO=$(pwd)
 
 my_dfiles_for_progs=(mc ranger vifm terminator)
-my_dfiles_for_other=(gitconfig zsh)
+my_dfiles_for_other=(gitconfig zshrc)
 # ========================================================================== #
 #                             FUNCTIONS                                      #
 # ========================================================================== #
 
 # messages
 info(){
-  echo -e $Yellow"Info: "$Color_Off$1
+  echo -e $Yellow"Info:"$Color_Off" "$1
 }
 
 success(){
@@ -43,11 +41,11 @@ success(){
 }
 
 error(){
-  echo -e $BIRed"Error: "$Color_Off$1
+  echo -e $BIRed"Error:"$Color_Off" "$1
 }
 
 warn (){
-  echo -e $IPurple"Warning: "$Color_Off$1
+  echo -e $IPurple"Warning:"$Color_Off" "$1
 }
 
 df_start(){
@@ -72,21 +70,22 @@ bak_files(){
       cp -r $TARGET_P $BF_FOLDER
       info "$p copied to $(basename $BFILES)/$(basename $BF_FOLDER)"
     else
-      info "There is no configuration for $p"
+      warn "There was no configuration for $p - probably not installed"
     fi
   done
   for o in ${my_dfiles_for_other[@]}; do
-    TARGET_O='$HOME/."$o"'
-    if [[ -e $TARGET_O ]]; then
-      cp $TARGET_O $BFILES
-      info ".$o copied to $(basename $BFILES)/$(basename $BFILES)"
+    if [[ -e $HOME/.$o ]]; then
+      cp $HOME/.$o $BFILES
+      info ".$o copied to $(basename $BFILES)/$(basename $BF_FOLDER)"
     else
-      info "There was no .$o"
+      warn "There was no .$o - probably not installed"
     fi
   done
   if [[ -d $CFILES/lvim/lua ]]; then
     mv $CFILES/lvim/lua $BFILES
-    info "lvim config moved to $(basename $BFILES)/$(basename $BFILES)"
+    info "lvim config moved to $(basename $BFILES)/$(basename $BF_FOLDER)"
+  else
+      warn "There was no configuration for lvim - probably not installed"
   fi
 }
 
@@ -344,7 +343,7 @@ while [ "$repeat" = true ]; do
   read -s -n 1 NUMBER
   while true; do
     case $NUMBER in
-      0) exit 0 ;;
+      0|q) exit 0 ;;
       1) 
         repeat=true
         bak_files
@@ -377,7 +376,7 @@ while [ "$repeat" = true ]; do
           read -s -n 1 NUMBER_PROGS
           while true; do
             case $NUMBER_PROGS in
-              0) exit 0 ;;
+              0|q) exit 0 ;;
               1) 
                 repeat_progs=true
                 lg  
