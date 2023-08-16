@@ -1,10 +1,26 @@
+os:
+  edit: 'lvim {{filename}}'
+  editAtLine: 'lvim --line={{line}} {{filename}}'
+  editAtLineAndWait: 'lvim --block --line={{line}} {{filename}}'
+  editInTerminal: true
+  openDirInEditor: 'lvim {{dir}}'
 git:
   paging:
     colorArg: always
     pager: delta --dark --paging=never
+  # branchLogCmd: "git log --graph --color=always --abbrev-commit --decorate --date=relative --pretty=medium --oneline {{branchName}} --"
 gui:
-  showIcons: true
-  showFileTree: true # for rendering changes files in a tree format
-  showCommandLog: true
-os:
-  editCommand: 'lvim'
+  # showIcons: true
+  theme:
+    selectedLineBgColor:
+      - default
+    selectedRangeBgColor:
+      - default
+  # authorColors:
+  #   'John Smith': 'red' # use red for John Smith
+  #   'Alan Smithee': '#00ff00' # use green for Alan Smithee
+  #  use blue for other authors
+  # '*': '#0000ff'
+  branchColors:
+    'main': '#11aaff' # use a light blue for branches beginning with 'docs/'
+  nerdFontsVersion: "3"
