@@ -33,7 +33,6 @@ alias sv='sudo nvim'
 alias l='lvim'
 alias sl='sudo lvim'
 alias napis='figlet'
-alias lg='lazygit'
 alias gfs='git fuzzy status'
 
 # IP
