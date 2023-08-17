@@ -121,10 +121,10 @@ lg(){
     fi
     echo "Installing lazygit..."
     LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz"
-    tar xf lazygit.tar.gz lazygit
-    sudo install lazygit /usr/local/bin
-    rm lazygit.tar.gz
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" --output-dirs --output-dir $HOME/tmp/
+    cd $HOME/tmp && tar xf lazygit.tar.gz lazygit && cd -
+    sudo mv $HOME/tmp/lazygit /usr/local/bin
+    rm $HOME/tmp/lazygit.tar.gz
     echo "Lazygit installation successful"
   else
     echo "Lazygit already installed"
@@ -328,7 +328,7 @@ menu_progs(){
   7) LunarVim
   8) Rust       
   9) Golang     
-  "$IGreen"0) Quit\n"$Color_Off
+  "$IGreen"0) Menu up\n"$Color_Off
 }
 # ########################################################################## #
 # ========================================================================== #
@@ -376,7 +376,10 @@ while [ "$repeat" = true ]; do
           read -s -n 1 NUMBER_PROGS
           while true; do
             case $NUMBER_PROGS in
-              0|q) exit 0 ;;
+              0|q) 
+                menu
+                break 
+                ;;
               1) 
                 repeat_progs=true
                 lg  
