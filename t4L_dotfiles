@@ -114,20 +114,32 @@ ln_other(){
 }
 
 lg(){
-  if [[ ! -e /usr/local/bin/lazygit ]]; then
+  if [[ -e /usr/local/bin/lazygit ]]; then
+    local ver=$(lazygit -version | awk '{print $6}' | awk -F = '{print $2}' | sed 's/.$//' | awk -F . '{print $2$3}')
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*' | awk -F . '{print $2$3}')
+    if (( $ver <= LAZYGIT_VERSION )); then
+      sudo rm /usr/local/bin/lazygit
     if ! command -v git $>/dev/null; then
       echo "Installing git..."
       sudo apt install -y git
     fi
-    echo "Installing lazygit..."
-    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
-    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" --output-dirs --output-dir $HOME/tmp/
+    echo "Updating lazygit..."
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" --create-dirs --output-dir $HOME/tmp/
     cd $HOME/tmp && tar xf lazygit.tar.gz lazygit && cd -
     sudo mv $HOME/tmp/lazygit /usr/local/bin
     rm $HOME/tmp/lazygit.tar.gz
-    echo "Lazygit installation successful"
+    echo "Lazygit updated successful"
+    else
+      echo "Your lazygit is installed and is up-to-date"
+    fi
   else
-    echo "Lazygit already installed"
+    echo "Installing lazygit"
+    LAZYGIT_VERSION=$(curl -s "https://api.github.com/repos/jesseduffield/lazygit/releases/latest" | grep -Po '"tag_name": "v\K[^"]*')
+    curl -Lo lazygit.tar.gz "https://github.com/jesseduffield/lazygit/releases/latest/download/lazygit_${LAZYGIT_VERSION}_Linux_x86_64.tar.gz" --create-dirs --output-dir $HOME/tmp/
+    cd $HOME/tmp && tar xf lazygit.tar.gz lazygit && cd -
+    sudo mv $HOME/tmp/lazygit /usr/local/bin
+    rm $HOME/tmp/lazygit.tar.gz
+    echo "Lazygit installed successfuly..."
   fi
 }
 
