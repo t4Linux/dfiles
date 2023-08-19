@@ -7,12 +7,11 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Description: ZSH configuration -editor    2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-02-23 ------------------+ #
+. ~/config_env
 
-MY_FILES="$HOME/dotfiles/zsh/plugins"
 #------------------- BAT --------------------------#
 export BAT_THEME="Coldark-Dark"
 export BAT_STYLE="header-filename,header-filesize,grid"
 #------------------ EDITOR ------------------------#
 [[ ! -d $MY_FILES ]] || \
-(source $MY_FILES/editor.zsh && \
- source $MY_FILES/run_editor)
+ source $MY_FILES/zsh/settings/run_editor

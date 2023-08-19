@@ -12,72 +12,79 @@
 # +------------------------------------------------------------------------+ #
 #
 # |---------------------  checking for script args  -----------------------| #
+REPO=$(pwd)
 if [ ${#} -eq 0 ]; then
-  echo "Please enter the location you want to install zsh configuration"
+  echo "Please enter the location of your all DOTFILES folder"
 else
-
+location="export MY_FILES"
+echo $location"="$HOME/$1 > ~/config_env
+. ~/config_env
 # |------------------------ setting dir location --------------------------| #
-  MY_FILES="$HOME/$1/zsh"
-  if [[ ! -d $MY_FILES ]]; then
-    mkdir -p $MY_FILES
+if [[ ! -d $HOME/$1 ]]; then
+  mkdir -p $HOME/$1 
+fi
 # |------------------------ copy repo files to dir ------------------------| #
-  REPO=$(pwd)
-  cp -r $REPO/zsh/ $MY_FILES
+if [[ ! -d $MY_FILES/zsh ]]; then 
+  mkdir -p $MY_FILES/zsh
+  cp -r $REPO/zsh/* $MY_FILES/zsh
 else 
-  mv $MY_FILES $MY_FILES.bak
+  mv $MY_FILES/zsh $MY_FILES/zsh.bak
   REPO=$(pwd)
-  cp -r $REPO/zsh/ $MY_FILES
-  fi
+  cp -r $REPO/zsh/* $MY_FILES/zsh
+fi
 
 # |------------------------ zsh plugin installer --------------------------| #
-  zsh_plug(){
-    git -C $MY_FILES clone https://github.com/$1.git
-  }
+zsh_plug(){
+  git -C $MY_FILES/zsh/ clone https://github.com/$1.git
+}
 
 # |------------------------ plugins installation -------------------------| #
-  if [[ ! -d $MY_FILES/fzf ]]; then
+if [[ ! -d $MY_FILES/zsh/fzf ]]; then
     a=prefix=\'~/.fzf\'
     b=prefix=
     c=$MY_FILES/fzf
     zsh_plug "junegunn/fzf"
-    sed -ie "s@$a@$b$c@g" $MY_FILES/fzf/install 
-    $MY_FILES/fzf/install --all --completion --no-fish --no-bash
-    mv ~/.fzf.zsh $MY_FILES/settings/fzf.zsh
+    sed -ie "s@$a@$b$c@g" $MY_FILES/zsh/fzf/install 
+    $MY_FILES/zsh/fzf/install --all --completion --no-fish --no-bash
+    mv ~/.fzf.zsh $MY_FILES/zsh/settings/fzf.zsh
   fi
 
-  if [[ ! -d $MY_FILES/fzf-tab ]]; then
+  if [[ ! -d $MY_FILES/zsh/fzf-tab ]]; then
     zsh_plug "Aloxaf/fzf-tab"
   fi
 
-  if [[ ! -d $MY_FILES/zsh-autosuggestions ]]; then
+  if [[ ! -d $MY_FILES/zsh/zsh-autosuggestions ]]; then
     zsh_plug "zsh-users/zsh-autosuggestions"
   fi
 
-  if [[ ! -d $MY_FILES/zsh-completions ]]; then
+  if [[ ! -d $MY_FILES/zsh/zsh-completions ]]; then
     zsh_plug "zsh-users/zsh-completions"
   fi
 
-  if [[ ! -d $MY_FILES/zsh-syntax-highlighting ]]; then
+  if [[ ! -d $MY_FILES/zsh/zsh-syntax-highlighting ]]; then
     zsh_plug "zsh-users/zsh-syntax-highlighting"
   fi
 
-  if [[ ! -d $MY_FILES/powerlevel10k ]]; then
+  if [[ ! -d $MY_FILES/zsh/powerlevel10k ]]; then
     zsh_plug "romkatv/powerlevel10k"
   fi
 
-  if [[ ! -d $MY_FILES/git-fuzzy ]]; then
+  if [[ ! -d $MY_FILES/zsh/git-fuzzy ]]; then
     zsh_plug "bigH/git-fuzzy"
   fi
 
-  if [[ ! -d $MY_FILES/zsh-history-substring-search ]]; then
+  if [[ ! -d $MY_FILES/zsh/zsh-history-substring-search ]]; then
     zsh_plug "zsh-users/zsh-history-substring-search"
   fi
 
   if [[ -f $HOME/.zshrc ]]; then
-    rm ~/.zshrc && ln -s $MY_FILES/zshrc $HOME/.zshrc 
+    rm ~/.zshrc && ln -s $MY_FILES/zsh/zshrc $HOME/.zshrc 
   fi
 
   if [[ ! -L $HOME/.config/zsh ]]; then
-    ln -s $HOME/t4Linux/dotfiles/zsh/ $HOME/.config/zsh
+    ln -s $MY_FILES/zsh/ $HOME/.config/zsh
+  fi
+  if [[ ! -d $MY_FILES/aliases ]]; then
+    cp -r $REPO/aliases $MY_FILES
   fi
 fi

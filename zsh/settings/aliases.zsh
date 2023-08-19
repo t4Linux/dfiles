@@ -7,7 +7,7 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Dscr: ZSH configuration - aliases         2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
-MY_FILES="$HOME/t4Linux/dotfiles"
+. ~/config_env
 
 [[ -d "$MY_FILES/aliases" ]] && \
 . $MY_FILES/aliases/my_aliases && \

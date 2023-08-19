@@ -12,7 +12,7 @@
 # |            - functions
 # |            - FOR look with 2 variables
 # +------------------------------------------------------------------------+ #
-MY_FILES="$HOME/t4Linux/dotfiles/zsh"
+. ~/config_env
 
 my_editors=(lvim nvim vim)
 my_viewers=(bat cat)
@@ -22,12 +22,14 @@ new_visual="export VISUAL="
 new_pager="export PAGER="
 
 set_editor(){
-  echo $new_editor$i > $MY_FILES/settings/run_editor
-  echo $new_visual$i >> $MY_FILES/plugins/run_editor
+  . ~/config_env
+  touch $MY_FILES/zsh/settings/run_editor
+  echo $new_editor$i > $MY_FILES/zsh/settings/run_editor
+  echo $new_visual$i >> $MY_FILES/zsh/settings/run_editor
   exit 0
 }
 set_viewer(){
-  echo $new_pager$j >> $MY_FILES/plugins/run_editor
+  echo $new_pager$j >> $MY_FILES/zsh/settings/run_editor
 }
 
 editor_check(){
@@ -51,8 +53,11 @@ editor_check(){
     elif [[ $j == cat ]]; then
       set_viewer
     fi
+  fi
   }
 
+if [[ ! -f $MY_FILES/zsh/settings/run_editor ]]; then
 for i in ${my_editors[@]}, j in ${my_viewers[@]}; do
   editor_check
 done
+fi

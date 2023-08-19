@@ -8,14 +8,15 @@
 # |  Description: ZSH configuration: paths     2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
 #
-MY_FILES="$HOME/dotfiles"
+. ~/config_env
+
 [[ ! -d "$HOME/bin" ]] || PATH="$HOME/bin:$PATH"
 [[ ! -d "$HOME/.local/bin" ]] || PATH="$HOME/.local/bin:$PATH"
 [[ ! -d "$MY_FILES/.krew" ]] || \
 PATH="${KREW_ROOT:-$MY_FILES/.krew}/bin:$PATH"
-[[ ! -d "$MY_FILES/.config/zsh/git-fuzzy" ]] || \
-PATH="$MY_FILES/.config/zsh/git-fuzzy/bin:$PATH"
-[[ ! -d "$MY_FILES/.config/zsh/zsh-completions" ]] || \
-PATH="$MY_FILES/.config/zsh/zsh-completions/src:$PATH"
+[[ ! -d "$MY_FILES/zsh/git-fuzzy" ]] || \
+PATH="$MY_FILES/zsh/git-fuzzy/bin:$PATH"
+[[ ! -d "$MY_FILES/zsh/zsh-completions" ]] || \
+PATH="$MY_FILES/zsh/zsh-completions/src:$PATH"
 [[ ! -d "/usr/local/go" ]] || PATH="/usr/local/go/bin:$PATH"
 
