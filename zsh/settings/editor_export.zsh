@@ -60,4 +60,6 @@ if [[ ! -f $MY_FILES/zsh/settings/run_editor ]]; then
 for i in ${my_editors[@]}, j in ${my_viewers[@]}; do
   editor_check
 done
+else
+  source $MY_FILES/zsh/settings/run_editor
 fi
