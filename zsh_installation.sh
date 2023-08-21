@@ -77,6 +77,10 @@ if [[ ! -d $MY_FILES/zsh/fzf ]]; then
     zsh_plug "zsh-users/zsh-history-substring-search"
   fi
 
+  if [[ ! -d $MY_FILES/zsh/zsh-z ]]; then
+    zsh_plug "agkozak/zsh-z"
+  fi
+
   if [[ -f $HOME/.zshrc ]]; then
     rm ~/.zshrc && ln -s $MY_FILES/zsh/zshrc $HOME/.zshrc 
   fi
