@@ -49,22 +49,26 @@ zstyle ':fzf-tab:*' switch-group ',' '.'
 zstyle ':autocomplete:tab:*' fzf-completion yes
 zstyle ':completion:*' fzf-search-display true
 
-[[ ! -d $MY_FILES/zsh/fzf-tab ]] || \
-source $MY_FILES/zsh/fzf-tab/fzf-tab.plugin.zsh
-[[ ! -d $MY_FILES/zsh/fzf ]] || \
-source $MY_FILES/zsh/fzf/shell/key-bindings.zsh
+! command -v kubectl &> /dev/null || source $MY_FILES/zsh/plugins/kubectl
+
 [[ ! -d $MY_FILES/zsh/plugins ]] || \
 # informs you in given comand has an alias
-(source $MY_FILES/zsh/plugins/zsh-alias-finder.plugin.zsh && \
+source $MY_FILES/zsh/plugins/zsh-alias-finder.plugin.zsh && \
 # 2 times ESC puts sudo infront of command
 source $MY_FILES/zsh/plugins/systemd.plugin.zsh && \
 # Ctrl+w puts last ommand on watch -d
 source $MY_FILES/zsh/plugins/watch.plugin.zsh && \
 # 2x ESC ads sudo in front 
-source $MY_FILES/zsh/plugins/sudo.plugin.zsh)                      
+source $MY_FILES/zsh/plugins/sudo.plugin.zsh                      
+
+[[ ! -d $MY_FILES/zsh/fzf-tab ]] || \
+source $MY_FILES/zsh/fzf-tab/fzf-tab.plugin.zsh
+[[ ! -d $MY_FILES/zsh/fzf ]] || \
+source $MY_FILES/zsh/fzf/shell/key-bindings.zsh
 [[ ! -d $MY_FILES/zsh/zsh-z ]] || \
 source $MY_FILES/zsh/zsh-z/zsh-z.plugin.zsh
 [[ ! -d $MY_FILES/zsh/zsh-autosuggestions ]] || \
 source $MY_FILES/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 [[ ! -d $MY_FILES/zsh/zsh-syntax-highlighting ]] || \
 source $MY_FILES/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+
