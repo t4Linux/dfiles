@@ -9,8 +9,6 @@
 # +------------------------------------------ 2023-03-01 ------------------+ #
 . ~/config_env
 
-[[ -d "$MY_FILES/aliases" ]] && \
-. $MY_FILES/aliases/my_aliases && \
-. $MY_FILES/aliases/my_kubectl && \
-. $MY_FILES/aliases/aliases_execon && \
-
+[[ ! -f $MY_FILES/aliases/my_aliases ]] || . $MY_FILES/aliases/my_aliases
+[[ ! -f $MY_FILES/aliases/my_kubectl ]] || . $MY_FILES/aliases/my_kubectl
+[[ ! -f $MY_FILES/aliases/aliases_execon ]] || . $MY_FILES/aliases/aliases_execon
