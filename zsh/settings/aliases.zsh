@@ -8,7 +8,7 @@
 # |  Dscr: ZSH configuration - aliases         2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
 . ~/config_env
-dep=(exa bat)
+dep=(exa bat ranger alacritty)
 
 for i in ${dep[@]}; do
   if ! command -v $i $>/dev/null; then

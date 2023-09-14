@@ -15,6 +15,7 @@
 
 if ! command -v nvim &>/dev/null; then
   sudo apt install zsh -y
+  chsh -s $(which zsh)
 fi
 
 REPO=$(pwd)
@@ -100,3 +101,4 @@ if [[ ! -d $MY_FILES/zsh/fzf ]]; then
     ln -s $REPO/fonts $HOME/.local/share/fonts
   fi
 fi
+sed '$d' $MY_FILES/zsh/zshrc
