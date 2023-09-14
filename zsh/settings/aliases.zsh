@@ -8,9 +8,13 @@
 # |  Dscr: ZSH configuration - aliases         2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
 . ~/config_env
-if ! command -v exa $>/dev/null; then
-  sudo apt install exa
-fi
+dep=(exa bat)
+
+for i in ${dep[@]}; do
+  if ! command -v $i $>/dev/null; then
+    sudo apt install $i -y
+  fi
+done
 
 [[ ! -f $MY_FILES/aliases/my_aliases ]] || . $MY_FILES/aliases/my_aliases
 [[ ! -f $MY_FILES/aliases/my_kubectl ]] || . $MY_FILES/aliases/my_kubectl
