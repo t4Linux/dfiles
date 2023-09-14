@@ -12,6 +12,11 @@
 # +------------------------------------------------------------------------+ #
 #
 # |---------------------  checking for script args  -----------------------| #
+
+if ! command -v nvim &>/dev/null; then
+  sudo apt install zsh -y
+fi
+
 REPO=$(pwd)
 if [ ${#} -eq 0 ]; then
   echo "Please enter the location of your all DOTFILES folder"
@@ -90,5 +95,8 @@ if [[ ! -d $MY_FILES/zsh/fzf ]]; then
   fi
   if [[ ! -d $MY_FILES/aliases ]]; then
     cp -r $REPO/aliases $MY_FILES
+  fi
+  if [[ ! -d $MY_FILES/fonts ]]; then
+    ln -s $REPO/fonts $HOME/.local/share/fonts
   fi
 fi
