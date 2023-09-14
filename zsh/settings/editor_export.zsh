@@ -33,15 +33,12 @@ set_viewer(){
 }
 
 editor_check(){
+    for i in ${my_editors[@]}; do
   if command -v $i &>/dev/null; then
-    if [[ $i == lvim ]]; then
-      set_editor
-    elif [[ $i == nvim ]]; then
-      set_editor
-    elif [[ $i == vim ]]; then
       set_editor
     fi
-  else
+done
+if [[ -f $MY_FILES/zsh/settings/run_editor ]]; then
     echo -e "Please install "$IGreen" vim | neovim | lunarvim "$Color_Off"to set your "$IGreen"EDITOR"$Color_Off
     echo "You can use program to install it"
     exit 0
