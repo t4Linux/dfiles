@@ -1,16 +1,23 @@
-if (( ! $+commands[kubectl] )); then
-  return
-fi
+if (( $+commands[kubectl] )); then
+  # TODO: 2022-01-05: remove this block
+  # remove old generated files
+ # command rm -f "$ZSH_CACHE_DIR/kubectl_completion"
 
-# If the completion file doesn't exist yet, we need to autoload it and
-# bind it to `kubectl`. Otherwise, compinit will have already done that.
-if [[ ! -f "$ZSH_CACHE_DIR/completions/_kubectl" ]]; then
-  typeset -g -A _comps
-  autoload -Uz _kubectl
-  _comps[kubectl]=_kubectl
-fi
+  # TODO: 2022-01-05: remove this bit of code as it exists in oh-my-zsh.sh
+  # Add completions folder in $ZSH_CACHE_DIR
+  command mkdir -p "~/.config/zsh/completions"
+  (( ${fpath[(Ie)"~/.config/zsh/completions"]} )) || fpath=("~/.config/zsh/completions" $fpath)
 
-kubectl completion zsh 2> /dev/null >| "$ZSH_CACHE_DIR/completions/_kubectl" &|
+  # If the completion file does not exist, generate it and then source it
+  # Otherwise, source it and regenerate in the background
+  if [[ ! -f "~/.config/zsh/completions/_kubectl" ]]; then
+    kubectl completion zsh | tee "~/.config/zsh/completions/_kubectl" >/dev/null
+    source "~/.config/zsh/completions/_kubectl"
+  else
+    source "~/.config/zsh/completions/_kubectl"
+    kubectl completion zsh | tee "~/.config/zsh/completions/_kubectl" >/dev/null &|
+  fi
+fi
 
 # This command is used a LOT both below and in daily life
 alias k=kubectl
@@ -33,7 +40,7 @@ alias kccc='kubectl config current-context'
 # List all contexts
 alias kcgc='kubectl config get-contexts'
 
-# General aliases
+# General aliases
 alias kdel='kubectl delete'
 alias kdelf='kubectl delete -f'
 
@@ -48,7 +55,7 @@ alias kdelp='kubectl delete pods'
 alias kgpall='kubectl get pods --all-namespaces -o wide'
 
 # get pod by label: kgpl "app=myapp" -n myns
-alias kgpl='kgp -l'
+# alias kgpl='kgp -l'
 
 # get pod by namespace: kgpn kube-system"
 alias kgpn='kgp -n'
@@ -118,7 +125,7 @@ alias kgssw='kgss --watch'
 alias kgsswide='kgss -o wide'
 alias kess='kubectl edit statefulset'
 alias kdss='kubectl describe statefulset'
-alias kdelss='kubectl delete statefulset'
+alias kdelss='kubectl deete statefulset'
 alias ksss='kubectl scale statefulset'
 alias krsss='kubectl rollout status statefulset'
 
