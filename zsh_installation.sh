@@ -75,12 +75,12 @@ if [[ ! -d $MY_FILES/zsh/fzf ]]; then
     zsh_plug "romkatv/powerlevel10k"
   fi
 
-  if [[ ! -d $MY_FILES/zsh/git-fuzzy ]]; then
-    zsh_plug "bigH/git-fuzzy"
-  fi
-
   if [[ ! -d $MY_FILES/zsh/zsh-history-substring-search ]]; then
     zsh_plug "zsh-users/zsh-history-substring-search"
+  fi
+
+  if [[ ! -d $MY_FILES/zsh/fzf-zsh-completions/ ]]; then
+    zsh_plug "chitoku-k/fzf-zsh-completions"
   fi
 
   if [[ ! -d $MY_FILES/zsh/zsh-z ]]; then

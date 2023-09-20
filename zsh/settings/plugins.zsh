@@ -34,22 +34,11 @@ export FZF_CTRL_T_OPTS="
 # ALT + C Print tree structure in the preview window
 export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 
-#-----------------FZF-TAB---------------------
-# disable sort when completing `git checkout`
-zstyle ':completion:*:git-checkout:*' sort false
-# set descriptions format to enable group support
-zstyle ':completion:*:descriptions' format '[%d]'
-# set list-colors to enable filename colorizing
-zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
-# preview directory's content with exa when completing cd
-zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
-# switch group using `,` and `.`
-zstyle ':fzf-tab:*' switch-group ',' '.'
 #----------------------------------------------
 zstyle ':autocomplete:tab:*' fzf-completion yes
 zstyle ':completion:*' fzf-search-display true
 
-! command -v kubectl &> /dev/null || source $MY_FILES/zsh/plugins/kubectl
+[ ! command -v kubectl &> /dev/null ] || source $MY_FILES/zsh/plugins/kubectl
 
 [[ ! -d $MY_FILES/zsh/plugins ]] || \
 # informs you in given comand has an alias
@@ -61,8 +50,21 @@ source $MY_FILES/zsh/plugins/watch.plugin.zsh && \
 # 2x ESC ads sudo in front 
 source $MY_FILES/zsh/plugins/sudo.plugin.zsh                      
 
+#-----------------FZF-TAB---------------------
 [[ ! -d $MY_FILES/zsh/fzf-tab ]] || \
 source $MY_FILES/zsh/fzf-tab/fzf-tab.plugin.zsh
+# disable sort when completing `git checkout`
+zstyle ':completion:*:git-checkout:*' sort false
+# set descriptions format to enable group support
+zstyle ':completion:*:descriptions' format '[%d]'
+# set list-colors to enable filename colorizing
+zstyle ':completion:*' list-colors ${(s.:.)LS_COLORS}
+# preview directory's content with exa when completing cd
+zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
+# switch group using `,` and `.`
+zstyle ':fzf-tab:*' switch-group ',' '.'
+#---------------------------------------------
+
 [[ ! -d $MY_FILES/zsh/fzf ]] || \
 source $MY_FILES/zsh/fzf/shell/key-bindings.zsh
 [[ ! -d $MY_FILES/zsh/zsh-z ]] || \
@@ -71,4 +73,8 @@ source $MY_FILES/zsh/zsh-z/zsh-z.plugin.zsh
 source $MY_FILES/zsh/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 [[ ! -d $MY_FILES/zsh/zsh-syntax-highlighting ]] || \
 source $MY_FILES/zsh/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+[[ ! -d $MY_FILES/zsh/zsh-completions/ ]] || \
+source $MY_FILES/zsh/zsh-completions/zsh-completions.plugin.zsh
+[[ ! -d $MY_FILES/zsh/fzf-zsh-completions/ ]] || \
+source $MY_FILES/zsh/fzf-zsh-completions/fzf-zsh-completions.plugin.zsh
 
