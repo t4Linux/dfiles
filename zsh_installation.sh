@@ -102,3 +102,4 @@ if [[ ! -d $MY_FILES/zsh/fzf ]]; then
   fi
 fi
 sed '$d' $MY_FILES/zsh/zshrc
+
