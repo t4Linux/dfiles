@@ -1,5 +1,6 @@
 lvim.plugins = {
   {"lunarvim/colorschemes"},
+  {"glepnir/zephyr-nvim"},
   {"nvim-lua/plenary.nvim"},
   {
   "windwp/nvim-spectre",

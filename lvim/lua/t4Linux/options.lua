@@ -1,5 +1,5 @@
 -- ## THEME
-lvim.colorscheme = "tokyonight"
+lvim.colorscheme = "zephyr"
 lvim.transparent_window = true
 lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
 -- ## GENERAL SETTINGs
