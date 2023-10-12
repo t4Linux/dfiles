@@ -63,16 +63,18 @@ class Zenburn(ColorScheme):
                 if fg in (174, 95):
                     fg = 248
                 else:
-                    fg = 174
+                    fg = 11
+                    # fg = 174
             if not context.selected and (context.cut or context.copied):
-                fg = 108
+                fg = 28
+                # fg = 108
                 bg = 234
             if context.main_column:
                 if context.selected:
                     attr |= bold
                 if context.marked:
                     attr |= bold
-                    fg = 223
+                    fg = 10
             if context.badinfo:
                 if attr & reverse:
                     bg = 95
