@@ -10,11 +10,11 @@
 . ~/config_env
 dep=(exa bat ranger alacritty)
 
+if ! command -v $i $>/dev/null; then
 for i in ${dep[@]}; do
-  if ! command -v $i $>/dev/null; then
-    sudo apt install $i -y
-  fi
+   echo "You have to install " $i" for all aliases to work." 
 done
+fi
 
 [[ ! -f $MY_FILES/aliases/my_aliases ]] || . $MY_FILES/aliases/my_aliases
 [[ ! -f $MY_FILES/aliases/my_kubectl ]] || . $MY_FILES/aliases/my_kubectl
