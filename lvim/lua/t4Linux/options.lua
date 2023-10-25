@@ -4,6 +4,7 @@ lvim.transparent_window = true
 lvim.builtin.nvimtree.setup.actions.open_file.quit_on_open = true
 -- ## GENERAL SETTINGs
 vim.opt.relativenumber = true
+vim.opt.statuscolumn = "%l %r"
 vim.opt.spell = true
 
 -- ## KEYBINDIGS
