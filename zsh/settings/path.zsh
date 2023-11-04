@@ -10,7 +10,6 @@
 #
 . ~/config_env
 
-[[ ! -d "$HOME/bin" ]] || PATH="$HOME/bin:$PATH"
 [[ ! -d "$HOME/.local/bin" ]] || PATH="$HOME/.local/bin:$PATH"
 [[ ! -d "$MY_FILES/.krew" ]] || \
 PATH="${KREW_ROOT:-$MY_FILES/.krew}/bin:$PATH"

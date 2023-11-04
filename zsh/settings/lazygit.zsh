@@ -1,6 +1,6 @@
 lg()
 {
-    export LAZYGIT_NEW_DIR_FILE=~/.lazygit/newdir
+    export LAZYGIT_NEW_DIR_FILE=~/.config/lazygit/newdir
 
     lazygit "$@"
 

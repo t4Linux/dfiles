@@ -16,6 +16,7 @@ create(){
   mkdir -p $HOME/$1 
   cp -r $REPO/zsh/* $HOME/$1/zsh
   ln -s $HOME/$1/zsh/zshenv $HOME/.zshenv
+  echo "ZDOTDIR=$HOME/$1/zsh" >> $HOME/.zshenv
   location="export MY_FILES"
   echo $location"="$HOME/$1 >> ~/.zshenv
 }
@@ -26,6 +27,13 @@ zsh_plug(){
 
 # |---------------------  checking for script args  -----------------------| #
 # 
+if [ ${#} -eq 0 ]; then
+  echo "Please enter the location of your all DOTFILES folder"
+  exit 78
+fi
+# |---------------------     MAIN SCRIPT            -----------------------| #
+# 
+
 REPO=$(pwd)
 
 if ! command -v zsh &>/dev/null; then
@@ -33,9 +41,6 @@ if ! command -v zsh &>/dev/null; then
   chsh -s $(which zsh)
 fi
 
-if [ ${#} -eq 0 ]; then
-  echo "Please enter the location of your all DOTFILES folder"
-fi
 # |------------------------ setting dir location --------------------------| #
 if [[ ! -d $HOME/$1 ]]; then
   create

@@ -7,14 +7,13 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Dscr: ZSH configuration - aliases         2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
-. ~/config_env
-dep=(exa bat ranger alacritty)
+dep=(exa bat ranger kitty docker lvim kubectl kubecolor)
 
-if ! command -v $i $>/dev/null; then
 for i in ${dep[@]}; do
+  if ! command -v $i $>/dev/null; then
    echo "You have to install " $i" for all aliases to work." 
+  fi
 done
-fi
 
 [[ ! -f $MY_FILES/aliases/my_aliases ]] || . $MY_FILES/aliases/my_aliases
 [[ ! -f $MY_FILES/aliases/my_kubectl ]] || . $MY_FILES/aliases/my_kubectl

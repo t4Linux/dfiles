@@ -8,8 +8,6 @@
 # |  Description: ZSH configuration - hisotry  2022-12-13     \___)=(___// | #
 # +------------------------------------------ 2023-02-05 ------------------+ #
 #
-. ~/config_env
-
 setopt extended_history         # Record history with timestamp.
 setopt inc_append_history       # Append history to file as soon as they're entered.
 setopt hist_no_store            # Don't store history commands
