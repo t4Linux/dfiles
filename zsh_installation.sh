@@ -11,38 +11,38 @@
 # |  Description : ZSH configuration setup                                 | # 
 # +------------------------------------------------------------------------+ #
 #
-# |---------------------  checking for script args  -----------------------| #
-
-if ! command -v nvim &>/dev/null; then
-  sudo apt install zsh -y
-  chsh -s $(which zsh)
-fi
-
-REPO=$(pwd)
-if [ ${#} -eq 0 ]; then
-  echo "Please enter the location of your all DOTFILES folder"
-else
-location="export MY_FILES"
-echo $location"="$HOME/$1 > ~/config_env
-. ~/config_env
-# |------------------------ setting dir location --------------------------| #
-if [[ ! -d $HOME/$1 ]]; then
+# |------------------------ zsh FUNCTIONS        --------------------------| #
+create(){
   mkdir -p $HOME/$1 
-fi
-# |------------------------ copy repo files to dir ------------------------| #
-if [[ ! -d $MY_FILES/zsh ]]; then 
-  mkdir -p $MY_FILES/zsh
-  cp -r $REPO/zsh/* $MY_FILES/zsh
-else 
-  mv $MY_FILES/zsh $MY_FILES/zsh.bak
-  REPO=$(pwd)
-  cp -r $REPO/zsh/* $MY_FILES/zsh
-fi
-
+  cp -r $REPO/zsh/* $HOME/$1/zsh
+  ln -s $HOME/$1/zsh/zshenv $HOME/.zshenv
+  location="export MY_FILES"
+  echo $location"="$HOME/$1 >> ~/.zshenv
+}
 # |------------------------ zsh plugin installer --------------------------| #
 zsh_plug(){
   git -C $MY_FILES/zsh/ clone https://github.com/$1.git
 }
+
+# |---------------------  checking for script args  -----------------------| #
+# 
+REPO=$(pwd)
+
+if ! command -v zsh &>/dev/null; then
+  sudo apt install zsh -y
+  chsh -s $(which zsh)
+fi
+
+if [ ${#} -eq 0 ]; then
+  echo "Please enter the location of your all DOTFILES folder"
+fi
+# |------------------------ setting dir location --------------------------| #
+if [[ ! -d $HOME/$1 ]]; then
+  create
+else 
+  mv $HOME/$1/zsh $HOME/$1/zsh.bak
+  create
+fi
 
 # |------------------------ plugins installation -------------------------| #
 if [[ ! -d $MY_FILES/zsh/fzf ]]; then
