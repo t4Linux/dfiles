@@ -10,16 +10,13 @@
 # | Shelscript :  ZSH configuration file                                   | # 
 # | Version    :  1.3                                                      | #
 # +------------------------------------------------------------------------+ #
-. ~/config_env
 . $MY_FILES/zsh/settings/path.zsh && \
-. $MY_FILES/zsh/settings/editor_export.zsh && \
 . $MY_FILES/zsh/settings/power10k.zsh && \
 . $MY_FILES/zsh/settings/history.zsh && \
 . $MY_FILES/zsh/settings/aliases.zsh && \
 . $MY_FILES/zsh/settings/plugins.zsh && \
 . $MY_FILES/zsh/settings/basic.zsh && \
 . $MY_FILES/zsh/settings/manjaro-zsh-config
-. $MY_FILES/zsh/settings/env.zsh && \
 . $MY_FILES/zsh/settings/kubectl.zsh && \
 . $MY_FILES/zsh/settings/lazygit.zsh && \
 
