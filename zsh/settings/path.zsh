@@ -8,7 +8,6 @@
 # |  Description: ZSH configuration: paths     2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
 #
-. ~/config_env
 
 [[ ! -d "$HOME/.local/bin" ]] || PATH="$HOME/.local/bin:$PATH"
 [[ ! -d "$MY_FILES/.krew" ]] || \

@@ -12,17 +12,20 @@
 # +------------------------------------------------------------------------+ #
 #
 # |------------------------ zsh FUNCTIONS        --------------------------| #
+REPO=$(pwd)
+USER_LOK=$1
+
 create(){
-  mkdir -p $HOME/$1 
-  cp -r $REPO/zsh/* $HOME/$1/zsh
-  ln -s $HOME/$1/zsh/zshenv $HOME/.zshenv
-  echo "ZDOTDIR=$HOME/$1/zsh" >> $HOME/.zshenv
+  mkdir -p $HOME/$USER_LOK 
+  cp -r $REPO/zsh/ $HOME/$USER_LOK/zsh
+  ln -s $HOME/$USER_LOK/zsh/zshenv $HOME/.zshenv
+  echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >> $HOME/.zshenv
   location="export MY_FILES"
-  echo $location"="$HOME/$1 >> ~/.zshenv
+  echo $location"="$HOME/$USER_LOK >> $HOME/.zshenv
 }
 # |------------------------ zsh plugin installer --------------------------| #
 zsh_plug(){
-  git -C $MY_FILES/zsh/ clone https://github.com/$1.git
+  git -C $HOME/$USER_LOK/zsh/ clone https://github.com/$1.git
 }
 
 # |---------------------  checking for script args  -----------------------| #
@@ -34,7 +37,6 @@ fi
 # |---------------------     MAIN SCRIPT            -----------------------| #
 # 
 
-REPO=$(pwd)
 
 if ! command -v zsh &>/dev/null; then
   sudo apt install zsh -y
@@ -42,69 +44,68 @@ if ! command -v zsh &>/dev/null; then
 fi
 
 # |------------------------ setting dir location --------------------------| #
-if [[ ! -d $HOME/$1 ]]; then
+if [[ ! -d $HOME/$USER_LOK ]]; then
   create
 else 
-  mv $HOME/$1/zsh $HOME/$1/zsh.bak
+  mv $HOME/$USER_LOK/zsh $HOME/$USER_LOK/zsh.bak
   create
 fi
 
 # |------------------------ plugins installation -------------------------| #
-if [[ ! -d $MY_FILES/zsh/fzf ]]; then
-    a=prefix=\'~/.fzf\'
-    b=prefix=
-    c=$MY_FILES/fzf
-    zsh_plug "junegunn/fzf"
-    sed -ie "s@$a@$b$c@g" $MY_FILES/zsh/fzf/install 
-    $MY_FILES/zsh/fzf/install --all --completion --no-fish --no-bash
-    mv ~/.fzf.zsh $MY_FILES/zsh/settings/fzf.zsh
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/fzf-tab ]]; then
-    zsh_plug "Aloxaf/fzf-tab"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/zsh-autosuggestions ]]; then
-    zsh_plug "zsh-users/zsh-autosuggestions"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/zsh-completions ]]; then
-    zsh_plug "zsh-users/zsh-completions"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/zsh-syntax-highlighting ]]; then
-    zsh_plug "zsh-users/zsh-syntax-highlighting"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/powerlevel10k ]]; then
-    zsh_plug "romkatv/powerlevel10k"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/zsh-history-substring-search ]]; then
-    zsh_plug "zsh-users/zsh-history-substring-search"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/fzf-zsh-completions/ ]]; then
-    zsh_plug "chitoku-k/fzf-zsh-completions"
-  fi
-
-  if [[ ! -d $MY_FILES/zsh/zsh-z ]]; then
-    zsh_plug "agkozak/zsh-z"
-  fi
-
-  if [[ -f $HOME/.zshrc ]]; then
-    rm ~/.zshrc && ln -s $MY_FILES/zsh/zshrc $HOME/.zshrc 
-  fi
-
-  if [[ ! -L $HOME/.config/zsh ]]; then
-    ln -s $MY_FILES/zsh/ $HOME/.config/zsh
-  fi
-  if [[ ! -d $MY_FILES/aliases ]]; then
-    cp -r $REPO/aliases $MY_FILES
-  fi
-  if [[ ! -d $MY_FILES/fonts ]]; then
-    ln -s $REPO/fonts $HOME/.local/share/fonts
-  fi
+if [[ ! -d $HOME/$USER_LOK/zsh/fzf ]]; then
+  a=prefix=\'~/.fzf\'
+  b=prefix=
+  c=$HOME/$USER_LOK/fzf
+  zsh_plug "junegunn/fzf"
+  sed -ie "s@$a@$b$c@g" $HOME/$USER_LOK/zsh/fzf/install 
+  $HOME/$USER_LOK/zsh/fzf/install --all --completion --no-fish --no-bash
+  mv ~/.fzf.zsh $HOME/$USER_LOK/zsh/settings/fzf.zsh
 fi
-sed '$d' $MY_FILES/zsh/zshrc
+
+if [[ ! -d $HOME/$USER_LOK/zsh/fzf-tab ]]; then
+  zsh_plug "Aloxaf/fzf-tab"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/zsh-autosuggestions ]]; then
+  zsh_plug "zsh-users/zsh-autosuggestions"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/zsh-completions ]]; then
+  zsh_plug "zsh-users/zsh-completions"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/zsh-syntax-highlighting ]]; then
+  zsh_plug "zsh-users/zsh-syntax-highlighting"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/powerlevel10k ]]; then
+  zsh_plug "romkatv/powerlevel10k"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/zsh-history-substring-search ]]; then
+  zsh_plug "zsh-users/zsh-history-substring-search"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/fzf-zsh-completions/ ]]; then
+  zsh_plug "chitoku-k/fzf-zsh-completions"
+fi
+
+if [[ ! -d $HOME/$USER_LOK/zsh/zsh-z ]]; then
+  zsh_plug "agkozak/zsh-z"
+fi
+
+if [[ -f $HOME/.zshrc ]]; then
+  rm ~/.zshrc && ln -s $HOME/$USER_LOK/zsh/zshrc $HOME/.zshrc 
+fi
+
+if [[ ! -L $HOME/.config/zsh ]]; then
+  ln -s $HOME/$USER_LOK/zsh/ $HOME/.config/zsh
+fi
+if [[ ! -d $HOME/$USER_LOK/aliases ]]; then
+  cp -r $REPO/aliases $HOME/$USER_LOK
+fi
+if [[ ! -d $HOME/$USER_LOK/fonts ]]; then
+  ln -s $REPO/fonts $HOME/.local/share/fonts
+fi
+sed '$d' $HOME/$USER_LOK/zsh/zshrc
 

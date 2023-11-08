@@ -7,7 +7,6 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Description: ZSH configuration: plugins   2022-12-13     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
-. ~/config_env
 
 [[ ! -f $MY_FILES/zsh/settings/fzf.zsh ]] || \
 source $MY_FILES/zsh/settings/fzf.zsh

@@ -8,7 +8,6 @@
 # |  Description: ZSH configuration: p10k      2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
 #
-. ~/config_env
 
 [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]] &&
 . "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"

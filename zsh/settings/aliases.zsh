@@ -9,11 +9,14 @@
 # +------------------------------------------ 2023-03-01 ------------------+ #
 dep=(exa bat ranger kitty docker lvim kubectl kubecolor)
 
-for i in ${dep[@]}; do
-  if ! command -v $i $>/dev/null; then
-   echo "You have to install " $i" for all aliases to work." 
-  fi
-done
+# for i in ${dep[@]}; do
+#   # command -v $i $>/dev/null || echo "You have to install " $i" for all aliases to work." 
+#   if (( ! $+command[$i] )); then
+#     echo "zainstaluj $i"
+#   elif (( $+command[$i] )); then
+#     echo $i "OK'
+#   fi
+# done
 
 [[ ! -f $MY_FILES/aliases/my_aliases ]] || . $MY_FILES/aliases/my_aliases
 [[ ! -f $MY_FILES/aliases/my_kubectl ]] || . $MY_FILES/aliases/my_kubectl
