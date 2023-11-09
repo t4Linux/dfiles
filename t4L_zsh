@@ -41,6 +41,8 @@ fi
 if ! command -v zsh &>/dev/null; then
   sudo apt install zsh -y
   chsh -s $(which zsh)
+else
+  chsh -s $(which zsh)
 fi
 
 # |------------------------ setting dir location --------------------------| #
@@ -94,10 +96,6 @@ if [[ ! -d $HOME/$USER_LOK/zsh/zsh-z ]]; then
   zsh_plug "agkozak/zsh-z"
 fi
 
-if [[ -f $HOME/.zshrc ]]; then
-  rm ~/.zshrc && ln -s $HOME/$USER_LOK/zsh/zshrc $HOME/.zshrc 
-fi
-
 if [[ ! -L $HOME/.config/zsh ]]; then
   ln -s $HOME/$USER_LOK/zsh/ $HOME/.config/zsh
 fi
@@ -107,5 +105,6 @@ fi
 if [[ ! -d $HOME/$USER_LOK/fonts ]]; then
   ln -s $REPO/fonts $HOME/.local/share/fonts
 fi
-sed '$d' $HOME/$USER_LOK/zsh/zshrc
+# sed '$d' $HOME/$USER_LOK/zsh/.zshrc
+rm $HOME/.zshrc
 

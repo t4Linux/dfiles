@@ -28,6 +28,7 @@ export BAT_STYLE="header-filename,header-filesize,grid"
 
 # |------------------------        OTHER         --------------------------| #
 
+export AZURE_CONFIG_DIR=$XDG_DATA_HOME/azure
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export LESSHISTFILE="-"
 export KUBECONFIG="$XDG_CONFIG_HOME/kube"

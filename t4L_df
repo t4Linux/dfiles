@@ -1,0 +1,60 @@
+#!/bin/env bash
+REPO=$(pwd)
+USER_LOK=$1
+MY_FILES=$HOME/$USER_LOK
+# |---------------------  checking for script args  -----------------------| #
+# 
+if [ ${#} -eq 0 ]; then
+  echo "Please enter the location of your all DOTFILES folder"
+  exit 78
+fi
+
+lv_step_2(){
+    echo 'reload("t4Linux.options")' >> $HOME/.config/$1/config.lua
+    echo 'reload("t4Linux.plugins")' >> $HOME/.config/$1/config.lua
+}
+
+lv_step(){
+  cp -r $REPO/$1 $MY_FILES/$1
+  ln -s $MY_FILES/$1/lua $HOME/.config/$1/lua
+  if [[ -e $HOME/.config/$1/config.lua ]]; then
+    lv_step_2 $1
+  else
+    touch $HOME/.config/$1/config.lua
+    lv_step_2 $1
+  fi
+}
+
+dfiles(){
+  if ! command -v $1 &>/dev/null; then
+    sudo apt install $1 -y
+    cp -r $REPO/$1 $MY_FILES
+    ln -s $MY_FILES/$1 $HOME/.config/$1
+  else
+    if [[ -d $HOME/.config/$1 ]]; then
+      rm -fr $HOME/.config/$1
+      cp -r $REPO/$1 $MY_FILES/$1
+      ln -s $MY_FILES/$1 $HOME/.config/$1
+    fi
+  fi
+}
+
+lv(){
+  if ! command -v $1 &>/dev/null; then
+    echo "You have to install LunarVim first"
+    return
+  else
+    if [[ -d $HOME/.config/$1/lua ]]; then
+      rm -fr $HOME/.config/$1/lua
+      lv_step $1
+    else
+      lv_step $1
+    fi
+  fi
+}
+
+if [[ $2 == "lvim" ]]; then
+  lv $2
+else
+  dfiles $2
+fi
