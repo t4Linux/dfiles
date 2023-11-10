@@ -1,3 +1,0 @@
-alias uniqa='echo "konfiguracja DNS UNQ"; sudo resolvectl domain vpn0 "~uniqa.korp.intranet" "~axa-pl.intraxa"'
-alias exe='echo "konfiguracja DNS EXECON"; sudo resolvectl dns ppp0 192.168.1.1 && sudo resolvectl domain ppp0 "~execon.pl" "~abee.cloud"'
-alias mrgcfg='echo "Dodawanie nowego kubeconfig"; KUBECONFIG=$HOME/.kube/config:/tmp/kubeconfig kubectl config view --merge --flatten > ~/config && \mv -f ~/config ~/.kube/config && chmod go-r ~/.kube/config'

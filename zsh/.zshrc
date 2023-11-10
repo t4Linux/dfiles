@@ -7,18 +7,18 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Description: ZSH configuration            2022-12-13     \___)=(___// | #
 # +------------------------------------------ 2023-02-23 ------------------+ #
-# | Shelscript :  ZSH configuration file                                   | #  
+# | Shelscript :  ZSH configuration file                                   | # 
 # | Version    :  1.3                                                      | #
-# +------------------------------------------------------------------------+ #                  
-MY_FILES="$HOME/t4Linux/dotfiles/zsh/settings"
+# +------------------------------------------------------------------------+ #
+. $MY_FILES/zsh/settings/path.zsh && \
+. $MY_FILES/zsh/settings/power10k.zsh && \
+. $MY_FILES/zsh/settings/history.zsh && \
+. $MY_FILES/zsh/settings/aliases.zsh && \
+. $MY_FILES/zsh/settings/plugins.zsh && \
+. $MY_FILES/zsh/settings/basic.zsh && \
+. $MY_FILES/zsh/settings/manjaro-zsh-config
+. $MY_FILES/zsh/settings/kubectl.zsh && \
+. $MY_FILES/zsh/settings/lazygit.zsh && \
 
-[[ -d "$MY_FILES/settings" ]] && \
-. $MY_FILES/path.zsh && \
-. $MY_FILES/editors.zsh && \
-. $MY_FILES/kubectl.zsh && \
-. $MY_FILES/history.zsh && \
-. $MY_FILES/power10k.zsh && \
-. $MY_FILES/aliases.zsh && \
-. $MY_FILES/plugins.zsh && \
-. $MY_FILES/basic.zsh.zsh && \
-. $MY_FILES/settings/manjaro-zsh-config
+[ ! -f $MY_FILES/zsh/setting/fzf.zsh ] || source $MY_FILES/settings/fzf/fzf.zsh
+

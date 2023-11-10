@@ -1,0 +1,47 @@
+[merge]
+  conflictstyle = diff3
+[init]
+	defaultBranch = master
+[core]
+  pager = delta
+  editor = lvim
+[interactive]
+  diffFilter = delta --color-only --features=interactive
+
+[delta]
+  navigate = true
+  whitespace-error-style = 22 reverse
+  features = unobtrusive-line-numbers decorations interactive
+[delta "unobtrusive-line-numbers"]
+  line-numbers = true
+  line-numbers-minus-style = "#E84341"
+  line-numbers-zero-style = "#444444"
+  line-numbers-plus-style = green
+  line-numbers-left-format = "{nm:>4}┊"
+  line-numbers-right-format = "{np:>4}│"
+  line-numbers-left-style = "#E84341"
+  line-numbers-right-style = green
+
+[delta "interactive"]
+  side-by-side = false
+  keep-plus-minus-markers = true
+
+[delta "decorations"]
+  commit-decoration-style = green ol
+  commit-style = raw
+  file-style = omit
+  hunk-header-decoration-style = green box
+  hunk-header-file-style = green
+  hunk-header-line-number-style = "#067a00"
+  hunk-header-style = file line-number syntax
+
+[alias]
+	co = checkout
+	br = branch --format='%(HEAD) %(color:yellow)%(refname:short)%(color:reset) - %(contents:subject) %(color:green)(%(committerdate:relative)) [%(authorname)]' --sort=-committerdate
+	ci = commit
+	st = status
+	unstage = reset HEAD --
+	last = log -1 HEAD
+	lg = !git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+	cob = checkout -b
+	res = !git reset --hard
