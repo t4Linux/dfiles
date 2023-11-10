@@ -15,6 +15,12 @@
 REPO=$(pwd)
 USER_LOK=$1
 
+fonts(){
+  cp -r $REPO/fonts $HOME/$USER_LOK/
+  ln -s $HOME/$USER_LOK/fonts/ $HOME/.local/share/fonts
+  fc-cache -f -v  
+}
+
 create(){
   mkdir -p $HOME/$USER_LOK 
   cp -r $REPO/zsh/ $HOME/$USER_LOK/zsh
@@ -22,6 +28,12 @@ create(){
   echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >> $HOME/.zshenv
   location="export MY_FILES"
   echo $location"="$HOME/$USER_LOK >> $HOME/.zshenv
+  if [[ ! -d $HOME/.local/share/fonts ]]; then
+    fonts
+  else
+    rm -fr $HOME/.local/share/fonts
+    fonts
+  fi
 }
 # |------------------------ zsh plugin installer --------------------------| #
 zsh_plug(){
