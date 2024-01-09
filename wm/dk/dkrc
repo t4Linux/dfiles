@@ -14,7 +14,10 @@ logfile="$HOME/.dkrc.log"
 dunst &
 spice-vdagent &
 nm-applet &
-eval $(/usr/bin/gnome-keyring-daemon --start --components=gpg,pkcs11,secrets,ssh) &
+eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets) &
+# eval $(gnome-keyring-daemon --start) &
+eval "$(ssh-agent -s)" &
+ssh-add &
 ~/.local/bin/monitors &
 ~/.config/polybar/launch.sh &
 nitrogen --restore &
@@ -22,6 +25,7 @@ picom --config ~/.config/dk/picom.conf &
 
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 export GTK_THEME="Adwaita:dark" nautilus
+export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh
 
 ########################################
 

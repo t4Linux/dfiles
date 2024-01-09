@@ -15,7 +15,15 @@
 
 XF86AudioMute
   volume.sh mute
-  # pactl set-sink-mute @DEFAULT_SINK@ toggle # toggle/true/false
+
+ctrl + XF86AudioPlay
+  playerctl --all-players next 
+
+shift + XF86AudioPlay
+  playerctl --all-players play
+
+XF86AudioPlay
+  playerctl --all-players pause 
 
 # Super_L; @Super_L
 #     rofi -show drun
@@ -94,6 +102,9 @@ super + shift + r
 # restart dk
 super + ctrl + shift + r
 	dkcmd restart
+
+super + {y, shift + y}
+  dkcmd set {static_ws=true && dkcmd restart && notify-send.sh "dk" "Static Windows TRUE", static_ws=false} && notify-send.sh "dk" "Static Windows FALSE"
 
 # scratch padZ
 super + {o, shift + o}
