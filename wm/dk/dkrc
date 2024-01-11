@@ -22,6 +22,7 @@ ssh-add &
 ~/.config/polybar/launch.sh &
 nitrogen --restore &
 picom --config ~/.config/dk/picom.conf &
+~/B_A/Nextcloud-3.11.0-x86_64.AppImage &
 
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 export GTK_THEME="Adwaita:dark" nautilus
@@ -61,9 +62,10 @@ fi
 
 	# default workspace '_' values used when allocating new workspaces
 	# can be applied to all existing workspaces when passed 'apply' after ws=_
-	dkcmd set ws=_ apply layout=tile master=1 stack=3 gap=6 border w=12
+	dkcmd set ws=_ apply layout=tile master=1 stack=3 gap=4 border w=12
 	dkcmd set ws=1 layout=tile stack=1 msplit=0.33
 	dkcmd set ws=2 layout=tile stack=1 msplit=0.33
+	dkcmd set ws=5 layout=tile stack=2 msplit=0.66
 	dkcmd set ws=10 layout=grid pad left=200 right=200 top=100 bottom=100 gap=50
 
 	# enable static workspaces and assign them to monitors (only relevant for multiple monitors)
