@@ -21,6 +21,22 @@ gui:
   #   'Alan Smithee': '#00ff00' # use green for Alan Smithee
   #  use blue for other authors
   # '*': '#0000ff'
+  # branchColors:
+  #   'main': '#11aaff' # use a light blue for branches beginning with 'docs/'
+  # nerdFontsVersion: "3"
+  authorColors:
+    'Samuel Bubienko': '#FFF633' # use red for John Smith
+    'artur.chmur': '#FFF633' # use red for John Smith'yellow' # use red for John Smith
+    'Artur Chmur': '#FFF633' # use red for John Smith'yellow' # use red for John Smith
+  #   'Alan Smithee': '#00ff00' # use green for Alan Smithee
+  #  use blue for other authors
+  # '*': '#0000ff'
   branchColors:
     'main': '#11aaff' # use a light blue for branches beginning with 'docs/'
+    'master': '#11aaff' # use a light blue for branches beginning with 'docs/'
+    'staging': '#36C84A'
+    'dev': '#FC29E3'
+    'scrum': '#FCB829'
+    'develop': '#36C84A'
+    'art': '#FAFC29'
   nerdFontsVersion: "3"
