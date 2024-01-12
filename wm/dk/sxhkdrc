@@ -20,10 +20,11 @@ ctrl + XF86AudioPlay
   playerctl --all-players next 
 
 shift + XF86AudioPlay
-  playerctl --all-players play
+  playerctl --all-players previous
 
 XF86AudioPlay
-  playerctl --all-players pause 
+  playerctl --all-players play-pause
+  # play_pause.sh
 
 # Super_L; @Super_L
 #     rofi -show drun
