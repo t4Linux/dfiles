@@ -13,7 +13,7 @@ polybar workspaces -c ~/.config/polybar/t4Linux.ini 2>&1 &
 polybar date -c ~/.config/polybar/t4Linux.ini 2>&1 &
 polybar mainbar-right -c ~/.config/polybar/t4Linux.ini 2>&1 &
 polybar tray -c ~/.config/polybar/t4Linux.ini 2>&1 &
-polybar update -c ~/.config/polybar/t4Linux.ini 2>&1 &
+# polybar update1 -c ~/.config/polybar/t4Linux.ini 2>&1 &
 polybar volume -c ~/.config/polybar/t4Linux.ini 2>&1 &
 polybar mainbar-right-4 -c ~/.config/polybar/t4Linux.ini 2>&1 &
 # disown
@@ -22,5 +22,6 @@ polybar mainbar-right-4 -c ~/.config/polybar/t4Linux.ini 2>&1 &
 if [[ $(xrandr -q | grep 'DP-2 connected') ]]; then
 	polybar workspaces-DP-2 -c ~/.config/polybar/t4Linux.ini 2>&1 &
 	polybar date-DP-2 -c ~/.config/polybar/t4Linux.ini 2>&1 &
+	polybar mainbar-right2 -c ~/.config/polybar/t4Linux.ini 2>&1 &
 fi
 echo "Bars launched..."

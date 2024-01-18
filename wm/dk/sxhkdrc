@@ -46,7 +46,7 @@ super + m
 super + d
 	vivaldi-stable
 
-super + f
+super + r
 	nautilus
 
 alt + p ; {k,t}
@@ -145,8 +145,8 @@ super + {_,shift + ,ctrl + }{1-9,0}
 	~/.local/bin/dkwhich
 
 # view, send, or follow to a workspace (by number)
-alt + {_,shift + }{1-5,0}
-	dkcmd ws {view,send} {6-9,10}
+alt + {_,shift +, ctrl + }{1-5}
+	dkcmd ws {view,send,follow} {6-9,10}
 	# ~/.local/bin/dkwhich
 
 # view, send, or follow to the next, previous, last active,

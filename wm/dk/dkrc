@@ -18,7 +18,7 @@ eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets
 # eval $(gnome-keyring-daemon --start) &
 eval "$(ssh-agent -s)" &
 ssh-add &
-~/.local/bin/monitors &
+~/.local/bin/monitors.sh &
 ~/.config/polybar/launch.sh &
 nitrogen --restore &
 picom --config ~/.config/dk/picom.conf &
@@ -156,13 +156,7 @@ fi
 	# open window(s) in a floating state
 	dkcmd rule class="^pavucontrol$" float=true w=793 h=462 x=950 y=350 stick=true
 	dkcmd rule class="^gnome-calculator$" float=true stick=true
-	dkcmd rule class="^xterm$" float=true w=600 h=200 x=3780 y=200 stick=false # border color w=3 f='#8A0AEF'
-
-	# open window(s) with a specific geometry and coordinates (floating only!)
-	dkcmd rule class="^google-chrome$" title="^open files$" float=true w=1280 h=720
-
-	# open window(s) with sticky and floating enabled to view on all workspaces.
-	dkcmd rule class="^stickyterm$" stick=true float=true w=1280 h=720
+	dkcmd rule class="^xterm$" float=true w=600 h=200 x=3780 y=200 stick=false
 
 	# focus window and workspace on opening
 	dkcmd rule class="^keepassxc$" ws=5 focus=true
