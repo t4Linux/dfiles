@@ -46,8 +46,11 @@ super + m
 super + d
 	vivaldi-stable
 
-super + r
+alt + r
 	nautilus
+
+alt + k
+	kazam
 
 alt + p ; {k,t}
   {kitty,gnome-terminal}
