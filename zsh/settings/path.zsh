@@ -18,3 +18,5 @@ PATH="$MY_FILES/zsh/git-fuzzy/bin:$PATH"
 PATH="$MY_FILES/zsh/zsh-completions/src:$PATH"
 [[ ! -d "/usr/local/go" ]] || PATH="/usr/local/go/bin:$PATH"
 
+[[ ! -d "$HOME/.local/share/cargo/bin" ]] || \
+PATH="$HOME/.local/share/cargo/bin:$PATH"

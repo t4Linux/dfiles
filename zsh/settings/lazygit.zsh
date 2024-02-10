@@ -1,11 +1,14 @@
 lg()
 {
-    export LAZYGIT_NEW_DIR_FILE=~/.config/lazygit/newdir
+
+    export LAZYGIT_NEW_DIR_FILE="$HOME/tmp/lazygit"
 
     lazygit "$@"
 
-    if [ -f $LAZYGIT_NEW_DIR_FILE ]; then
-            cd "$(cat $LAZYGIT_NEW_DIR_FILE)"
-            rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
-    fi
+    cd $(echo $LAZYGIT_NEW_DIR_FILE)
+    # if [ -e $LAZYGIT_NEW_DIR_FILE ]; then
+    #   lala=$LAZYGIT_NEW_DIR_FILE
+    #   cd $(echo $lala)
+    #         # rm -f $LAZYGIT_NEW_DIR_FILE > /dev/null
+    # fi
 }

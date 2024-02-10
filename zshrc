@@ -18,8 +18,24 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # |------------------------       BASH           --------------------------| #
 
+if [[ ! -d $XDG_STATE_HOME/bash/.bashrc ]]; then
+  mkdir -p "$XDG_STATE_HOME"/bash
+fi
 export HISTFILE="$XDG_STATE_HOME"/bash/history
-alias bash="bash --init-file /home/donald/.local/state/bash/.bashrc"
+alias bash="bash --init-file "$XDG_STATE_HOME"/bash/.bashrc"
+
+# |------------------------       KUBE           --------------------------| #
+
+export KUBECONFIG="$XDG_CONFIG_HOME/kube" 
+export KUBECACHEDIR="$XDG_CACHE_HOME/kube"
+
+
+# |------------------------       GnuPG          --------------------------| #
+
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg 
+if command -v gpg2 &> /dev/null; then
+  gpg2 --homedir "$XDG_DATA_HOME"/gnupg
+fi
 
 # |------------------------        BAT           --------------------------| #
 
@@ -39,6 +55,8 @@ export W3M_DIR="$XDG_STATE_HOME/w3m"
 export _Z_DATA="$XDG_DATA_HOME/z"
 # export WGETRC="$XDG_CONFIG_HOME/wgetrc"
 # alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+export RUSTUP_HOME="$XDG_CONFIG_HOME/.rustup"
+
 
 # |------------------------        OTHER         --------------------------| #
 
@@ -87,3 +105,4 @@ zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
 
 ZDOTDIR=/home/donald/.t4Linux/zsh
 export MY_FILES=/home/donald/.t4Linux
+. "/home/donald/.local/share/cargo/env"

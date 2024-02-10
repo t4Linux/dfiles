@@ -49,7 +49,7 @@ super + d
 alt + r
 	nautilus
 
-alt + k
+alt + v
 	kazam
 
 alt + p ; {k,t}
