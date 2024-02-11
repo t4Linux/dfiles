@@ -13,13 +13,13 @@
 font_family Hack Nerd Font
 font_size 9.5
 # |------------------------       CURSOR         --------------------------| #
-# cursor #55C322
+cursor #55C322
 cursor_shape beam 
 cursor_beam_thickness 1.5
 # |------------------------      SCROLLBACK      --------------------------| #
 scrollback_lines 700
 # |------------------------         MOUSE        --------------------------| #
-# url_color #0087bd
+url_color #0087bd
 url_style curly
 copy_on_select yes
 focus_follows_mouse yes
@@ -72,14 +72,8 @@ tab_powerline_style angled
 #  can be one of: angled, slanted, round
 tab_title_template "{fmt.fg.red}{bell_symbol}{activity_symbol}{fmt.fg.tab}{title}"
 # |------------------------    COLOR SCHEME      --------------------------| #
-background_opacity 0.90
+background_opacity 0.85
 # background_blur 1
 # |------------------------      ADVANCED        --------------------------| #
 editor .
 
-
-
-# BEGIN_KITTY_THEME
-# Vibrant Ink
-include current-theme.conf
-# END_KITTY_THEME

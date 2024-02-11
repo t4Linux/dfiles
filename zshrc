@@ -37,6 +37,14 @@ if command -v gpg2 &> /dev/null; then
   gpg2 --homedir "$XDG_DATA_HOME"/gnupg
 fi
 
+# |------------------------      GOLANG          --------------------------| #
+
+export GOPATH=$XDG_STATE_HOME/go
+# export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export GOROOT=/usr/lib/go
+export GOPATH=$XDG_STATE_HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+
 # |------------------------        BAT           --------------------------| #
 
 export BAT_THEME="Coldark-Dark"
