@@ -7,3 +7,4 @@ fonts/.uuid
 **/__pycache__/**
 __pycache__/**
 **/__pycache__
+ranger/plugins/__pycache__/__init__.cpython-310.opt-1.pyc
