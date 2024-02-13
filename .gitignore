@@ -4,3 +4,6 @@ aliases/aliases_execon
 fonts/.uuid
 fonts/.uuid.LCK
 fonts/.uuid
+**/__pycache__/**
+__pycache__/**
+**/__pycache__
