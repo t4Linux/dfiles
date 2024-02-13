@@ -49,6 +49,9 @@ super + d
 alt + r
 	nautilus
 
+alt + m
+	celluloid
+
 alt + v
 	kazam
 
