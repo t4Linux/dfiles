@@ -15,12 +15,14 @@ napis() {
 #     /____/                          
 #
 #    #  NALA  #
-alias sudo='sudo '
-alias apt='nala'
 alias list='apt list --upgradable'
 alias update='sudo nala upgrade -y && flatpak update -y && sudo nala autoremove -y'
-alias install='sudo nala inastall '
-alias search='nala search '
+alias ni='sudo nala install'
+alias nr='sudo nala remove '
+alias ns='nala search '
+
+alias psd='pactl set-default-sink '
+alias psc='pactl set-card-pprofile '
 
 # config
 alias s='source ~/.zshrc'
@@ -33,9 +35,10 @@ alias cat='bat -f'
 alias v='nvim'
 alias sv='sudo nvim'
 alias l='lvim'
-alias sl='sudo lvim'
 alias napis='figlet'
-alias gfs='git fuzzy status'
+
+# herbstlusftwm
+alias hc='herbstclient' 
 
 # IP
 alias ip='ip -c'
@@ -45,9 +48,8 @@ alias eip='curl icanhazip.com'
 # directories
 alias ..='cd ..'
 alias ...='cd ../..'
-alias cdd='cd ~/dotfiles'
 alias cdc='cd ~/.config'
-alias cdb='cd ~/bin'
+alias cdb='cd ~/.local/bin'
 
 alias cp='cp -iv -p'
 alias mv='mv -iv'
@@ -64,7 +66,6 @@ alias la='exa -lga --group-directories-first --icons --color-scale --time-style=
 
 alias m='minikube'
 alias d='docker'
-alias ydl='youtube-dl'
 
 # alias orphan='sudo pacman -Rs $(pacman -Qqtd)'
 

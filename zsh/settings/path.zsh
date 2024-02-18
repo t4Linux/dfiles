@@ -16,7 +16,7 @@ PATH="${KREW_ROOT:-$MY_FILES/.krew}/bin:$PATH"
 PATH="$MY_FILES/zsh/git-fuzzy/bin:$PATH"
 [[ ! -d "$MY_FILES/zsh/zsh-completions" ]] || \
 PATH="$MY_FILES/zsh/zsh-completions/src:$PATH"
-[[ ! -d "/usr/local/go" ]] || PATH="/usr/local/go/bin:$PATH"
+[[ ! -d "/usr/local/go" ]] || PATH="/usr/bin/go:$PATH"
 
 [[ ! -d "$HOME/.local/share/cargo/bin" ]] || \
 PATH="$HOME/.local/share/cargo/bin:$PATH"
