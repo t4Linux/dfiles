@@ -37,7 +37,6 @@ export FZF_ALT_C_OPTS="--preview 'tree -C {}'"
 zstyle ':autocomplete:tab:*' fzf-completion yes
 zstyle ':completion:*' fzf-search-display true
 
-[ ! command -v kubectl &> /dev/null ] || source $MY_FILES/zsh/plugins/kubectl
 
 [[ ! -d $MY_FILES/zsh/plugins ]] || \
 # informs you in given comand has an alias

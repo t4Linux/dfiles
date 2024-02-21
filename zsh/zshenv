@@ -18,8 +18,34 @@ export XDG_STATE_HOME="$HOME/.local/state"
 
 # |------------------------       BASH           --------------------------| #
 
+if [[ ! -d $XDG_STATE_HOME/bash/.bashrc ]]; then
+  mkdir -p "$XDG_STATE_HOME"/bash
+fi
 export HISTFILE="$XDG_STATE_HOME"/bash/history
-alias bash="bash --init-file /home/donald/.local/state/bash/.bashrc"
+alias bash="bash --init-file "$XDG_STATE_HOME"/bash/.bashrc"
+
+# |------------------------       KUBE           --------------------------| #
+
+export KUBECONFIG="$XDG_CONFIG_HOME/kube/config" 
+export KUBECACHEDIR="$XDG_CACHE_HOME/kube"
+export KREW_ROOT="$XDG_CONFIG_HOME/krew"
+export PATH="${KREW_ROOT:-$XDG_CONFIG_HOME/krew}/bin:$PATH"
+
+
+# |------------------------       GnuPG          --------------------------| #
+
+export GNUPGHOME="$XDG_DATA_HOME"/gnupg 
+if command -v gpg2 &> /dev/null; then
+  gpg2 --homedir "$XDG_DATA_HOME"/gnupg
+fi
+
+# |------------------------      GOLANG          --------------------------| #
+
+export GOPATH=$XDG_STATE_HOME/go
+# export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
+export GOROOT=/usr/lib/go
+export GOPATH=$XDG_STATE_HOME/go
+export PATH=$PATH:$GOROOT/bin:$GOPATH/bin
 
 # |------------------------        BAT           --------------------------| #
 
@@ -31,14 +57,15 @@ export BAT_STYLE="header-filename,header-filesize,grid"
 export AZURE_CONFIG_DIR=$XDG_DATA_HOME/azure
 export CARGO_HOME="$XDG_DATA_HOME"/cargo
 export LESSHISTFILE="-"
-export KUBECONFIG="$XDG_CONFIG_HOME/kube"
 export MINIKUBE_HOME="$XDG_DATA_HOME"/minikube
 export NPM_CONFIG_USERCONFIG=$XDG_CONFIG_HOME/npm/npmrc
 export SCREENRC="$XDG_CONFIG_HOME"/screen/screenrc
 export W3M_DIR="$XDG_STATE_HOME/w3m"
 export _Z_DATA="$XDG_DATA_HOME/z"
-export WGETRC="$XDG_CONFIG_HOME/wgetrc"
-alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+# export WGETRC="$XDG_CONFIG_HOME/wgetrc"
+# alias wget='wget --hsts-file="$XDG_CACHE_HOME/wget-hsts"'
+export RUSTUP_HOME="$XDG_CONFIG_HOME/.rustup"
+
 
 # |------------------------        OTHER         --------------------------| #
 
@@ -55,6 +82,10 @@ else
     echo "Install NeoVim or LunarVim"
   fi
 fi
+
+# |------------------------    Distrobox conf    --------------------------| #
+
+export DBX_CONTAINER_MANAGER="podman"
 
 # |------------------------    Color man pages   --------------------------| #
 
@@ -78,6 +109,10 @@ if [[ ! -d "$XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION" ]]; then
 fi
 # compinit -d $XDG_CACHE_HOME/zsh/zcompdump-$ZSH_VERSION
 zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
+# export $ZSH_CACHE_DIR=""
 
 # |------------------------         ZSH          --------------------------| #
 
+ZDOTDIR=/home/donald/.t4Linux/zsh
+export MY_FILES=/home/donald/.t4Linux
+. "/home/donald/.local/share/cargo/env"

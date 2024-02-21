@@ -15,7 +15,6 @@ dunst &
 spice-vdagent &
 nm-applet &
 eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets) &
-# eval $(gnome-keyring-daemon --start) &
 eval "$(ssh-agent -s)" &
 ssh-add &
 ~/.local/bin/monitors.sh &
