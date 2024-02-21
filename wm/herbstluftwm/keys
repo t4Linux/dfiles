@@ -1,0 +1,40 @@
+Mod=Mod1    # Use alt as the main modifier
+#Mod=Mod4   # Use the super key as the main modifier
+
+# REMOVE ALL EXISTING KEYBINDINGS #
+#---------------------------------#
+hc keyunbind --ALL
+
+###################################
+#           SYSTEM                #
+###################################
+
+#         mause settings          #
+#+++++++++++++++++++++++++++++++++#
+
+hc set mouse_recenter_gap 1                # mouse on center of monitor
+hc set focus_follows_mouse true            # focus following mouse
+
+
+# MONITORS
+
+hc set swap_monitors_to_get_tag false
+hc set focus_crosses_monitor_boundaries true
+
+
+# basic movement in tiling and floating mode
+# focusing clients
+hc keybind $Mod-Left focus left
+hc keybind $Mod-Down focus down
+hc keybind $Mod-Up focus up
+hc keybind $Mod-Right focus right
+
+# hc rule index=e
+# will prefer to place a new window in an existing, empty frame
+
+# System controls #
+#-----------------#
+# hc keybind $Mod-Shift-c spawn alacritty -t logout -e herbst-logout.sh
+# hc keybind $Mod-Control-r reload
+# hc keybind $Mod-Shift-q close
+# hc keybind $Mod-Shift-Return spawn "${TERMINAL:-kitty}" #

@@ -1,0 +1,183 @@
+# example sxhkdrc for use with dk
+#########################################################
+#
+# # dedicated backlight keys
+# {XF86MonBrightnessUp,XF86MonBrightnessDown}
+# 	xbacklight {+10,-10}
+
+##################################
+########## VOLUME ################
+##################################
+#
+{XF86AudioRaiseVolume,XF86AudioLowerVolume}
+  volume.sh {up,down}
+  # pactl set-sink-volume @DEFAULT_SINK@ {+5%,-5%}
+
+XF86AudioMute
+  volume.sh mute
+
+ctrl + XF86AudioPlay
+  playerctl --all-players next 
+
+shift + XF86AudioPlay
+  playerctl --all-players previous
+
+XF86AudioPlay
+  playerctl --all-players play-pause
+  # play_pause.sh
+
+# Super_L; @Super_L
+#     rofi -show drun
+
+##################################
+############ ROFI ################
+##################################
+     
+super + {c, shift + c}
+    {rofi -show drun, rofi -modi drun -show drun -line padding 4 -hide-scrollbar -show-icons}
+
+super + m
+    clipmenu
+
+##################################
+############# APPS ###############
+##################################
+
+super + d
+	vivaldi-stable
+
+alt + t
+  herbstclient split bottom 0.5 chain shift down
+
+# alt + r
+# 	nautilus
+
+# alt + p ; {k,t}
+#   {kitty,gnome-terminal}
+
+super + x
+  kitty
+
+##################################
+#
+##################################
+
+super + q
+  herbstclient close
+#   hc close
+
+##################################
+########## SCREENSHOTS ###########
+##################################
+super + @Print
+	scrot -s -e 'mv $f ~/Pictures'; \
+	notify-send 'Scrot' 'Selected image to ~/Pictures'
+
+@Print
+  screenshot.sh && notify-send 'Screenshot' 'Image saved in ~/Pictures/Screehots'
+
+##################################
+########### SCRIPTS ##############
+##################################
+
+# power setting
+super + p
+ xterm -fa 'Monospace' -fs 11 -bg Gray19 -e power.sh
+
+# sound switch
+super + s ; {s,d}
+  {xterm -fa 'Monospace' -fs 11 -bg Gray19 -e sound_switch.sh, xterm -fa 'Monospace' -fs 11 -bg Gray19 -e sound_switch_default.sh}
+
+super + n
+ xterm -fa 'Monospace' -fs 11 -bg Gray19 -e notification.sh && notify-send.sh "Notify" "Switch here :)" 
+
+##################################
+###########   DK   ###############
+##################################
+
+# reload sxhkd
+super + Escape
+	pkill -USR1 -x sxhkd;notify-send 'sxhkd' 'Reloaded config'
+
+# quit dk
+# super + shift + q
+# 	dkcmd exit
+
+# restart polybar
+super + shift + p
+	~/.config/herbstluftwm/polybar/launch.sh
+
+# # reload dkrc
+# super + shift + r
+# 	$HOME/.config/dk/dkrc; notify-send 'dk' 'Reloaded config'
+#
+# # restart dk
+# super + ctrl + shift + r
+# 	dkcmd restart
+#
+# super + {y, shift + y}
+#   dkcmd set {static_ws=true && dkcmd restart && notify-send.sh "dk" "Static Windows TRUE", static_ws=false} && notify-send.sh "dk" "Static Windows FALSE"
+#
+# # scratch padZ
+# super + {o, shift + o}
+#   dkcmd win scratch {_, push}
+#
+# # focus next or previous window
+# super + {k,j}
+# 	dkcmd win focus {next,prev}
+#
+# # close window, swap tiled window in/out of master, cycle tiled windows in place
+# super + {q,Tab,w}
+# 	dkcmd win {kill,cycle,swap}
+#
+# # toggle fullscreen and fake fullscreen (enable manipulating fullscreen window)
+# {_,super + }F11
+# 	dkcmd win {full,fakefull}
+#
+# # toggle floating or sticky
+# super + shift + {f,s}
+# 	dkcmd win {float,stick}
+#
+# # move window, signed (+/-) for relative changes
+# super + shift + {h,j,k,l}
+# 	dkcmd win resize {x=-20,y=+20,y=-20,x=+20}
+#
+# # resize window, signed (+/-) for relative changes
+# super + ctrl + {h,j,k,l}
+# 	dkcmd win resize {w=-20,h=+20,h=-20,w=+20}
+#
+# # move the active window up/down the stack
+# super + {Up,Down}
+# 	dkcmd win mvstack {Up,Down}
+#
+# # view, send, or follow to a workspace (by number)
+# super + {_,shift + ,ctrl + }{1-9,0}
+# 	dkcmd ws {view,send,follow} {1-9,10}; \
+# 	~/.local/bin/dkwhich
+#
+# # view, send, or follow to a workspace (by number)
+# alt + {_,shift +, ctrl + }{1-5}
+# 	dkcmd ws {view,send,follow} {6-9,10}
+# 	# ~/.local/bin/dkwhich
+#
+# # view, send, or follow to the next, previous, last active,
+# # next non-empty, or prev non-empty workspace
+# super + {_,shift + ,ctrl + }{bracketleft,bracketright,BackSpace,Left,Right}
+# 	dkcmd ws {view,send,follow} {prev,next,last,prevne,nextne}
+#
+# # view, send, or follow to the next, previous, or last active monitor
+# super + {_,shift + ,ctrl + }{comma,period,backslash}
+# 	dkcmd mon {view,send,follow} {prev,next,last}
+#
+#
+# # change number of windows in master or first stack
+# super + {_,shift + }{i,d}
+# 	dkcmd set {master,stack} {+1,-1}
+#
+# # change gap width
+# super + {equal,minus}
+# 	dkcmd set gap {+5,-5}
+#
+# # change border widths
+# super + ctrl + {_,shift + }{equal,minus}
+# 	dkcmd set border {width,outer_width} {+1,-1}
