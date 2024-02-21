@@ -115,4 +115,6 @@ zstyle ':completion:*' cache-path $XDG_CACHE_HOME/zsh/zcompcache
 
 ZDOTDIR=/home/donald/.t4Linux/zsh
 export MY_FILES=/home/donald/.t4Linux
-. "/home/donald/.local/share/cargo/env"
+if [[ -d $HOME/.local/share/cargo/env ]]; then
+  source "/home/donald/.local/share/cargo/env"
+fi
