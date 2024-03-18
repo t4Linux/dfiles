@@ -1,3 +1,4 @@
+#!/bin/bash
 # Replace the default section for tags in your autostart by the following:
 # This is the default tag section of the autostart, with a single change:
 # In the use_index keybinding, check the presence of the my_monitor attribute,
@@ -41,4 +42,12 @@ lock_tag_to_monitor() {
 }
 # Already lock some of the tags to a monitor, for example:
 # lock the second tag to the monitor with index 0
-lock_tag_to_monitor 2 0
+lock_tag_to_monitor 1 1
+lock_tag_to_monitor 2 1
+lock_tag_to_monitor 3 1
+lock_tag_to_monitor 4 1
+lock_tag_to_monitor 5 1
+lock_tag_to_monitor 6 0
+lock_tag_to_monitor 7 0
+lock_tag_to_monitor 8 0
+lock_tag_to_monitor 9 0

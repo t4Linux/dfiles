@@ -27,6 +27,8 @@ for i in ${!tag_keys[@]} ; do
     # hc keybind "$Mod4-Control-$key" \
     #     or CASE and . compare monitors.focus.index = 0 . chain , move "${mon1_names[$i]}" , use "${mon2_names[$i]}" \
     #        CASE and . compare monitors.focus.index = 1 . chain , move "${mon2_names[$i]}" , use "${mon1_names[$i]}"
+    hc keybind "Mod4-$key" \
+        monitors.focus.index = 1 . use "${mon2_names[$i]}"
 done
 
 # cycle through tags

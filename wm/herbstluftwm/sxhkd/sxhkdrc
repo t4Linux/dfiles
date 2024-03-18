@@ -30,7 +30,6 @@ XF86AudioPlay
 #     rofi -show drun
 
 ##################################
-############ ROFI ################
 ##################################
      
 super + {c, shift + c}
@@ -39,24 +38,26 @@ super + {c, shift + c}
 super + m
     clipmenu
 
-##################################
-############# APPS ###############
-##################################
-
 super + d
 	vivaldi-stable
 
-alt + t
-  herbstclient split bottom 0.5 chain shift down
+super + f
+  nautilus
 
-# alt + r
-# 	nautilus
+super + l 
+  celluloid
+
+alt + t
+  herbstclient chain , split bottom 0.5 , shift down
 
 # alt + p ; {k,t}
 #   {kitty,gnome-terminal}
 
 super + x
   kitty
+
+super + w ; {w,e,p}
+  {work.sh,env HOME=/home/donald/E_One/teams/execon flatpak run com.github.IsmaelMartinez.teams_for_linux &, env HOME=/home/donald/E_One/teams/polko flatpak run com.github.IsmaelMartinez.teams_for_linux &}
 
 ##################################
 #
@@ -86,10 +87,11 @@ super + p
 
 # sound switch
 super + s ; {s,d}
-  {xterm -fa 'Monospace' -fs 11 -bg Gray19 -e sound_switch.sh, xterm -fa 'Monospace' -fs 11 -bg Gray19 -e sound_switch_default.sh}
+  {herbstclient spawn alacritty -t sound_switch.sh -e sound_switch.sh, herbstclient spawn alacritty -t sound_switch_default.sh -e sound_switch_default.sh}
 
 super + n
- xterm -fa 'Monospace' -fs 11 -bg Gray19 -e notification.sh && notify-send.sh "Notify" "Switch here :)" 
+ herbstclient spawn alacritty -t notification.sh -e notification.sh \
+ notify-send.sh "Notify" "Switch here :)" 
 
 ##################################
 ###########   DK   ###############

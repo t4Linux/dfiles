@@ -12,44 +12,39 @@ hc emit_hook reload
 ############## autostart ################
 #########################################
 
-dunst &
-spice-vdagent &
-nm-applet &
-eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets) &
-# eval $(gnome-keyring-daemon --start) &
-eval "$(ssh-agent -s)" &
-ssh-add &
-~/.local/bin/monitors.sh &
-~/.config/herbstluftwm/polybar/launch.sh &
-nitrogen --restore &
-picom --config ~/.config/dk/picom.conf &
-~/B_A/Nextcloud-3.11.0-x86_64.AppImage &
-
 export GNOME_KEYRING_CONTROL GNOME_KEYRING_PID GPG_AGENT_INFO SSH_AUTH_SOCK
 export GTK_THEME="Adwaita:dark" nautilus
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh
 
+nitrogen --restore &
+dunst &
+spice-vdagent &
+eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets) &
+eval "$(ssh-agent -s)" &
+ssh-add &
+~/.local/bin/monitors.sh &
+~/.config/herbstluftwm/polybar/launch.sh &
+picom --config ~/.config/dk/picom.conf &
+
 ########################################
-#
 # (re)load sxhkd for keybinds
 if hash sxhkd >/dev/null 2>&1; then
 	pkill sxhkd
 	sxhkd -c "$HOME/.config/herbstluftwm/sxhkd/sxhkdrc" &
 fi
 
+# start applications
+sleep 5
+nm-applet &
+~/B_A/Nextcloud-3.11.0-x86_64.AppImage &
+
+#########################################
+#########################################
+
 xsetroot -solid '#5A8E3A'
 
 # keybindings
 source $HOME/.config/herbstluftwm/keys
-
-hc keybind $Mod-Shift-q quit
-hc keybind $Mod-Shift-r reload
-
-# moving clients in tiling and floating mode
-hc keybind $Mod-Shift-Left shift left
-hc keybind $Mod-Shift-Down shift down
-hc keybind $Mod-Shift-Up shift up
-hc keybind $Mod-Shift-Right shift right
 
 # hc keybind $Mod-Shift-h or / shift left / \
 # 	chain , lock , shift_to_monitor -l , focus_monitor -l , unlock
@@ -59,20 +54,6 @@ hc keybind $Mod-Shift-Right shift right
 # 	chain , lock , shift_to_monitor -u , focus_monitor -u , unlock
 # hc keybind $Mod-Shift-l or / shift right / \
 # 	chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
-
-# splitting frames
-# create an empty frame at the specified direction
-hc keybind $Mod-u chain , split bottom 0.5 , focus -e d
-hc keybind $Mod-o chain , split right 0.5 , focus -e r
-# let the current frame explode into subframes
-hc keybind $Mod-Control-space split explode
-
-# resizing frames and floating clients
-resizestep=0.02
-hc keybind $Mod-Control-h resize left +$resizestep
-hc keybind $Mod-Control-j resize down +$resizestep
-hc keybind $Mod-Control-k resize up +$resizestep
-hc keybind $Mod-Control-l resize right +$resizestep
 
 # tags
 source $HOME/.config/herbstluftwm/tag_per_monitor
@@ -95,33 +76,16 @@ tag_keys=({1..5} 0)
 # hc keybind $Mod-comma use_index -1 --skip-visible
 
 # layouting
-hc keybind $Mod-r remove
-hc keybind $Mod-s floating toggle
-hc keybind $Mod-f fullscreen toggle
 hc keybind $Mod-Shift-f set_attr clients.focus.floating toggle
 hc keybind $Mod-Shift-d set_attr clients.focus.decorated toggle
-hc keybind $Mod-Shift-m set_attr clients.focus.minimized true
-hc keybind $Mod-Control-m jumpto last-minimized
 hc keybind $Mod-p pseudotile toggle
 # The following cycles through the available layouts within a frame, but skips
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
 hc keybind $Mod-space \
 	or , and . compare tags.focus.curframe_wcount = 2 \
-	. cycle_layout +1 vertical horizontal max vertical grid \
-	, cycle_layout +1
-
-# mouse
-hc mouseunbind --all
-hc mousebind $Mod-Button1 move
-hc mousebind $Mod-Button2 zoom
-hc mousebind $Mod-Button3 resize
-
-# focus
-hc keybind $Mod-Tab cycle_monitor
-hc keybind $Mod-Shift-Tab cycle_all -1
-hc keybind $Mod-c cycle
-hc keybind $Mod-i jumpto urgent
+	. cycle_layout +1 vertical horizontal grid \
+	, cycle_layout +1 # . cycle_layout +1 vertical horizontal max vertical grid \
 
 # theme
 hc attr theme.tiling.reset 1
@@ -133,11 +97,11 @@ hc set frame_bg_active_color '#345F0Caa'
 hc set frame_border_width 1
 hc set show_frame_decorations 'focused_if_multiple'
 hc set frame_bg_transparent on
-hc set frame_transparent_width 5
-hc set frame_gap 4
+hc set frame_transparent_width 2
+hc set frame_gap 1
 
-hc attr theme.title_height 15
 hc attr theme.title_when never
+hc attr theme.title_height 15
 hc attr theme.title_font 'Dejavu Sans:pixelsize=12' # example using Xft
 # hc attr theme.title_font '-*-fixed-medium-r-*-*-13-*-*-*-*-*-*-*'
 hc attr theme.title_depth 3 # space below the title's baseline
@@ -167,11 +131,14 @@ done
 hc attr theme.tiling.outer_width 1
 hc attr theme.background_color '#141414'
 
-hc set window_gap 8
+hc set window_gap 4
 hc set frame_padding 1
 hc set smart_window_surroundings on
 hc set smart_frame_surroundings on
 hc set default_direction_external_only false
+hc set swap_monitors_to_get_tag = false
+#If set: If you want to view a tag, that already is viewed on another monitor, then the monitor contents will be swapped
+#and you see the wanted tag on the focused monitor. If not set, the other monitor is focused if it shows the desired tag.
 
 # rules
 hc unrule -F
@@ -184,9 +151,16 @@ hc rule floatplacement=smart
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
+hc rule class~'gnome-calculator' floating=on floatplacement=center
 hc rule fixedsize floating=on
 
-hc set tree_style '╾│ ├└╼─┐'
+hc rule title~'power.sh' floating=on floatplacement=center floating_geometry=375x250
+hc rule title~'notification.sh' floating=on floatplacement=center floating_geometry=375x150
+hc rule title~'sound_switch.sh' floating=on floatplacement=center floating_geometry=375x150
+hc rule title~'sound_switch_default.sh' floating=on floatplacement=center floating_geometry=375x150
+hc rule title~'scratchpad' floating=on floatplacement=center floating_geometry=1000x500
+
+hc set tree_style '│╾ ├└╼─┐'
 
 # unlock, just to be sure
 hc unlock
