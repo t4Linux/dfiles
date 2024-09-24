@@ -3,7 +3,7 @@
 # this is a simple config for herbstluftwm
 
 hc() {
-	herbstclient "$@"
+  herbstclient "$@"
 }
 
 hc emit_hook reload
@@ -17,6 +17,7 @@ export GTK_THEME="Adwaita:dark" nautilus
 export SSH_AUTH_SOCK=$XDG_RUNTIME_DIR/keyring/ssh
 
 nitrogen --restore &
+sed -i 's/monitor = 1/monitor = 0/g' ~/.config/dunst/dunstrc
 dunst &
 spice-vdagent &
 eval $(/usr/bin/gnome-keyring-daemon --start --components=ssh,gpg,pkcs11,secrets) &
@@ -25,18 +26,19 @@ ssh-add &
 ~/.local/bin/monitors.sh &
 ~/.config/herbstluftwm/polybar/launch.sh &
 picom --config ~/.config/dk/picom.conf &
+protonvpn-app &
 
 ########################################
 # (re)load sxhkd for keybinds
 if hash sxhkd >/dev/null 2>&1; then
-	pkill sxhkd
-	sxhkd -c "$HOME/.config/herbstluftwm/sxhkd/sxhkdrc" &
+  pkill sxhkd
+  sxhkd -c "$HOME/.config/herbstluftwm/sxhkd/sxhkdrc" &
 fi
 
 # start applications
 sleep 5
 nm-applet &
-~/B_A/Nextcloud-3.11.0-x86_64.AppImage &
+~/B_A/Nextcloud-3.13.0-x86_64.AppImage &
 
 #########################################
 #########################################
@@ -55,12 +57,20 @@ source $HOME/.config/herbstluftwm/keys
 # hc keybind $Mod-Shift-l or / shift right / \
 # 	chain , lock , shift_to_monitor -r , focus_monitor -r , unlock
 
-# tags
-source $HOME/.config/herbstluftwm/tag_per_monitor
+#  default layout for all workspaces
+hc set default_frame_layout horizontal
+hc substitute ALGO settings.default_frame_layout \
+  foreach T tags.by-name. \
+  sprintf ATTR '%c.tiling.root.algorithm' T \
+  set_attr ATTR ALGO
 
 tag_names=({1..5})
 tag_keys=({1..5} 0)
-#
+
+# two monitors & seperate workspaces for every monitor config
+source $HOME/.config/herbstluftwm/tag_per_monitor
+
+# one monitor config
 # hc rename default "${tag_names[0]}" || true
 # for i in "${!tag_names[@]}"; do
 # 	hc add "${tag_names[$i]}"
@@ -68,6 +78,7 @@ tag_keys=({1..5} 0)
 # 	if [ -n "$key" ]; then
 # 		hc keybind "$Mod-$key" use_index "$i"
 # 		hc keybind "$Mod-Shift-$key" move_index "$i"
+# 		hc keybind "$Mod-Control-$key" chain , move_index "$i , use "$key"
 # 	fi
 # done
 
@@ -83,14 +94,14 @@ hc keybind $Mod-p pseudotile toggle
 # layouts, if the layout change wouldn't affect the actual window positions.
 # I.e. if there are two windows within a frame, the grid layout is skipped.
 hc keybind $Mod-space \
-	or , and . compare tags.focus.curframe_wcount = 2 \
-	. cycle_layout +1 vertical horizontal grid \
-	, cycle_layout +1 # . cycle_layout +1 vertical horizontal max vertical grid \
+  or , and . compare tags.focus.curframe_wcount = 2 \
+  . cycle_layout +1 vertical horizontal \
+  , cycle_layout +1 # . cycle_layout +1 vertical horizontal max vertical grid \
 
 # theme
 hc attr theme.tiling.reset 1
 hc attr theme.floating.reset 1
-hc set frame_border_active_color '#222222cc'
+hc set frame_border_active_color yellow # '#222222cc'
 hc set frame_border_normal_color '#101010cc'
 hc set frame_bg_normal_color '#565656aa'
 hc set frame_bg_active_color '#345F0Caa'
@@ -119,21 +130,21 @@ hc attr theme.inner_color black
 hc attr theme.border_width 3
 hc attr theme.floating.border_width 4
 hc attr theme.floating.outer_width 1
-hc attr theme.floating.outer_color black
+hc attr theme.floating.outer_color blue
 hc attr theme.active.inner_color '#789161'
 hc attr theme.urgent.inner_color '#9A65B0'
 hc attr theme.normal.inner_color '#606060'
 # copy inner color to outer_color
 for state in active urgent normal; do
-	hc substitute C theme.${state}.inner_color \
-		attr theme.${state}.outer_color C
+  hc substitute C theme.${state}.inner_color \
+    attr theme.${state}.outer_color C
 done
 hc attr theme.tiling.outer_width 1
 hc attr theme.background_color '#141414'
 
 hc set window_gap 4
 hc set frame_padding 1
-hc set smart_window_surroundings on
+hc set smart_window_surroundings off
 hc set smart_frame_surroundings on
 hc set default_direction_external_only false
 hc set swap_monitors_to_get_tag = false
@@ -151,14 +162,17 @@ hc rule floatplacement=smart
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(DIALOG|UTILITY|SPLASH)' floating=on
 hc rule windowtype='_NET_WM_WINDOW_TYPE_DIALOG' focus=on
 hc rule windowtype~'_NET_WM_WINDOW_TYPE_(NOTIFICATION|DOCK|DESKTOP)' manage=off
-hc rule class~'gnome-calculator' floating=on floatplacement=center
 hc rule fixedsize floating=on
 
 hc rule title~'power.sh' floating=on floatplacement=center floating_geometry=375x250
 hc rule title~'notification.sh' floating=on floatplacement=center floating_geometry=375x150
 hc rule title~'sound_switch.sh' floating=on floatplacement=center floating_geometry=375x150
 hc rule title~'sound_switch_default.sh' floating=on floatplacement=center floating_geometry=375x150
-hc rule title~'scratchpad' floating=on floatplacement=center floating_geometry=1000x500
+hc rule title~'scratchpad' floating=on floatplacement=center floating_geometry=1100x800
+hc rule title~'popup-calendar' floating=on
+hc rule class~"Gnome-calculator" floating=on floatplacement=center
+hc rule class~"Proton Mail" floating=on floatplacement=center floating_geometry=1100x800
+hc rule class~"Yad" title~"yad-calendar" floating=on floatplacement=center
 
 hc set tree_style '│╾ ├└╼─┐'
 
@@ -169,6 +183,7 @@ hc unlock
 # hc set_monitors 1280x1024+0+0 1280x1024+1280+0
 # or simply:
 hc detect_monitors
+hc use 1_1
 
 # find the panel
 # panel=~/.config/herbstluftwm/panel.sh

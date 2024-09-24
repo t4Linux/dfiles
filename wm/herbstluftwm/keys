@@ -76,7 +76,10 @@ hc keybind $Mod-Up focus up
 hc keybind $Mod-Right focus right
 
 hc keybind $Mod-Return spawn scratch scratchpad
+hc keybind $Mod-Shift-Return spawn scratchpad3
 hc keybind $Mod-Shift-e spawn alacritty -t power.sh -e power.sh
+
+hc keybind $Mod-Shift-p spawn scratch2 Proton
 
 # hc rule index=e
 # will prefer to place a new window in an existing, empty frame

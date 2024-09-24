@@ -118,3 +118,6 @@ export MY_FILES=/home/donald/.t4Linux
 if [[ -d $HOME/.local/share/cargo/env ]]; then
   source "/home/donald/.local/share/cargo/env"
 fi
+
+export NVM_DIR="$HOME/.config/nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
