@@ -60,5 +60,3 @@ if [[ $2 == "lvim" ]]; then
 else
   dfiles $2
 fi
-
-"( oooooo )"

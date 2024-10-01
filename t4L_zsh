@@ -8,26 +8,26 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Version     : 1.0                         2023-02-21     \___)=(___// | #
 # +------------------------------------------ 2023-03-06 ------------------+ #
-# |  Description : ZSH configuration setup                                 | # 
+# |  Description : ZSH configuration setup                                 | #
 # +------------------------------------------------------------------------+ #
 #
 # |------------------------ zsh FUNCTIONS        --------------------------| #
 REPO=$(pwd)
 USER_LOK=$1
 
-fonts(){
+fonts() {
   cp -r $REPO/fonts $HOME/$USER_LOK/
   ln -s $HOME/$USER_LOK/fonts/ $HOME/.local/share/fonts
-  fc-cache -f -v  
+  fc-cache -f -v
 }
 
-create(){
-  mkdir -p $HOME/$USER_LOK 
+create() {
+  mkdir -p $HOME/$USER_LOK
   cp -r $REPO/zsh/ $HOME/$USER_LOK/zsh
   ln -s $HOME/$USER_LOK/zsh/zshenv $HOME/.zshenv
-  echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >> $HOME/.zshenv
+  echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >>$HOME/.zshenv
   location="export MY_FILES"
-  echo $location"="$HOME/$USER_LOK >> $HOME/.zshenv
+  echo $location"="$HOME/$USER_LOK >>$HOME/.zshenv
   if [[ ! -d $HOME/.local/share/fonts ]]; then
     fonts
   else
@@ -36,19 +36,18 @@ create(){
   fi
 }
 # |------------------------ zsh plugin installer --------------------------| #
-zsh_plug(){
+zsh_plug() {
   git -C $HOME/$USER_LOK/zsh/ clone https://github.com/$1.git
 }
 
 # |---------------------  checking for script args  -----------------------| #
-# 
+#
 if [ ${#} -eq 0 ]; then
   echo "Please enter the location of your all DOTFILES folder"
   exit 78
 fi
 # |---------------------     MAIN SCRIPT            -----------------------| #
-# 
-
+#
 
 if ! command -v zsh &>/dev/null; then
   sudo apt install zsh -y
@@ -60,7 +59,7 @@ fi
 # |------------------------ setting dir location --------------------------| #
 if [[ ! -d $HOME/$USER_LOK ]]; then
   create
-else 
+else
   mv $HOME/$USER_LOK/zsh $HOME/$USER_LOK/zsh.bak
   create
 fi
@@ -71,9 +70,10 @@ if [[ ! -d $HOME/$USER_LOK/zsh/fzf ]]; then
   b=prefix=
   c=$HOME/$USER_LOK/fzf
   zsh_plug "junegunn/fzf"
-  sed -ie "s@$a@$b$c@g" $HOME/$USER_LOK/zsh/fzf/install 
-  $HOME/$USER_LOK/zsh/fzf/install --all --completion --no-fish --no-bash
-  mv ~/.fzf.zsh $HOME/$USER_LOK/zsh/settings/fzf.zsh
+  sed -ie "s@$a@$b$c@g" $HOME/$USER_LOK/zsh/fzf/install
+  $HOME/$USER_LOK/zsh/fzf/install --all --completion --no-fish --no-bash --xdg --no-update-rc
+  mv $HOME/$USER_LOK/zsh/fzf/bin/* $HOME/.local/bin/
+  rm -fr $HOME/$USER_LOK/zsh/fzf
 fi
 
 if [[ ! -d $HOME/$USER_LOK/zsh/fzf-tab ]]; then
@@ -118,5 +118,4 @@ if [[ ! -d $HOME/$USER_LOK/fonts ]]; then
   ln -s $REPO/fonts $HOME/.local/share/fonts
 fi
 # sed '$d' $HOME/$USER_LOK/zsh/.zshrc
-rm $HOME/.zshrc
-
+# rm $HOME/.zshrc

@@ -1,10 +1,17 @@
+[user]
+	name = t4Linux
+	email = it@jorel.pl
+[init]
+	defaultBranch = main
+[color]
+	ui = auto
 [merge]
   conflictstyle = diff3
 [init]
-	defaultBranch = master
+	defaultBranch = main
 [core]
   pager = delta
-  editor = lvim
+  editor = nvim
 [interactive]
   diffFilter = delta --color-only --features=interactive
 
@@ -42,6 +49,6 @@
 	st = status
 	unstage = reset HEAD --
 	last = log -1 HEAD
-	lg = !git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30
+	lg = "!git log --pretty=format:\"%C(magenta)%h%Creset -%C(red)%d%Creset %s %C(dim green)(%cr) [%an]\" --abbrev-commit -30"
 	cob = checkout -b
 	res = !git reset --hard
