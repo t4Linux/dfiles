@@ -43,7 +43,8 @@ zsh_plug() {
 # |---------------------  checking for script args  -----------------------| #
 #
 if [ ${#} -eq 0 ]; then
-  echo "Please enter the location of your all DOTFILES folder"
+  echo -e "Please enter the location of your all DOTFILES folder\n"
+  echo -e "Correct format is: t4_zsh $HOME but suggested t4_zsh .t4Linux"
   exit 78
 fi
 # |---------------------     MAIN SCRIPT            -----------------------| #
@@ -73,6 +74,7 @@ if [[ ! -d $HOME/$USER_LOK/zsh/fzf ]]; then
   sed -ie "s@$a@$b$c@g" $HOME/$USER_LOK/zsh/fzf/install
   $HOME/$USER_LOK/zsh/fzf/install --all --completion --no-fish --no-bash --xdg --no-update-rc
   mv $HOME/$USER_LOK/zsh/fzf/bin/* $HOME/.local/bin/
+  cp $HOME/$USER_LOK/zsh/fzf/shell/key-bindings.zsh $HOME/$USER_LOK/zsh/plugins/
   rm -fr $HOME/$USER_LOK/zsh/fzf
 fi
 

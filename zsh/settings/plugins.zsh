@@ -47,6 +47,8 @@ source $MY_FILES/zsh/plugins/systemd.plugin.zsh && \
 source $MY_FILES/zsh/plugins/watch.plugin.zsh && \
 # 2x ESC ads sudo in front 
 source $MY_FILES/zsh/plugins/sudo.plugin.zsh                      
+# Ctrl+r list of previous commands
+source $MY_FILES/zsh/plugins/key-bindings.zsh
 
 #-----------------FZF-TAB---------------------
 [[ ! -d $MY_FILES/zsh/fzf-tab ]] || \
@@ -63,8 +65,6 @@ zstyle ':fzf-tab:complete:cd:*' fzf-preview 'exa -1 --color=always $realpath'
 zstyle ':fzf-tab:*' switch-group ',' '.'
 #---------------------------------------------
 
-[[ ! -d $MY_FILES/zsh/fzf ]] || \
-source $MY_FILES/zsh/fzf/shell/key-bindings.zsh
 [[ ! -d $MY_FILES/zsh/zsh-z ]] || \
 source $MY_FILES/zsh/zsh-z/zsh-z.plugin.zsh
 [[ ! -d $MY_FILES/zsh/zsh-autosuggestions ]] || \
