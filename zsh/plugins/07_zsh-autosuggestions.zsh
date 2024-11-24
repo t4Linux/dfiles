@@ -1,1 +1,1 @@
-source $HOME/t4Linux/github/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
+source $MY_GIT_LOK/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh

@@ -1,1 +1,1 @@
-source $HOME/t4Linux/github/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh
+source $MY_GIT_LOK/zsh-syntax-highlighting/zsh-syntax-highlighting.plugin.zsh

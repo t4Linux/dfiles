@@ -28,7 +28,7 @@ create() {
   ln -s $HOME/$USER_LOK/zsh/zshenv $HOME/.zshenv
   echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >>$HOME/.zshenv
   location="export MY_FILES"
-  location2="export MY_FILES"
+  location2="export MY_GIT_LOK"
   echo $location"="$HOME/$USER_LOK >>$HOME/.zshenv
   echo $location2"="$GIT_LOK >>$HOME/.zshenv
   if [[ ! -d $HOME/.local/share/fonts ]]; then
@@ -59,6 +59,8 @@ if ! command -v zsh &>/dev/null; then
 else
   chsh -s $(which zsh)
 fi
+
+curl -s https://ohmyposh.dev/install.sh | bash -s
 
 # |------------------------ setting dir location --------------------------| #
 if [[ ! -d $HOME/$USER_LOK ]]; then

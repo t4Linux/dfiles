@@ -1,9 +1,9 @@
 # Set up fzf key bindings and fuzzy completion
 source <(fzf --zsh)
 
-if [[ -d $HOME/t4Linux/github/fzf ]]; then
-  source $HOME/t4Linux/github/fzf/shell/completion.zsh
-  source $HOME/t4Linux/github/fzf/shell/key-bindings.zsh
+if [[ -d $MY_GIT_LOK/fzf ]]; then
+  source $MY_GIT_LOK/fzf/shell/completion.zsh
+  source $MY_GIT_LOK/fzf/shell/key-bindings.zsh
 else
   echo "FZF not not cloned here"
 fi
@@ -41,9 +41,9 @@ export FZF_ALT_C_OPTS="
 
 #------------- FZF-TAB ----------------
 
-if [[ -d $HOME/t4Linux/github/fzf-tab ]]; then
-  source $HOME/t4Linux/github/fzf-tab/fzf-tab.zsh
-  source $HOME/t4Linux/github/fzf-tab/fzf-tab.plugin.zsh
+if [[ -d $MY_GIT_LOK/fzf-tab ]]; then
+  source $MY_GIT_LOK/fzf-tab/fzf-tab.zsh
+  source $MY_GIT_LOK/fzf-tab/fzf-tab.plugin.zsh
 else
   echo "FZF-TAB not cloned and not sourced"
 fi
@@ -70,8 +70,8 @@ zstyle ':fzf-tab:*' switch-group '<' '>'
 
 #------------- FZF-COMPLETION ----------------
 
-if [[ -d $HOME/t4Linux/github/fzf-zsh-completions ]]; then
-  source $HOME/t4Linux/github/fzf-zsh-completions/fzf-zsh-completions.plugin.zsh
+if [[ -d $MY_GIT_LOK/fzf-zsh-completions ]]; then
+  source $MY_GIT_LOK/fzf-zsh-completions/fzf-zsh-completions.plugin.zsh
 else
   echo "No FZF-COMPLETION"
 fi
