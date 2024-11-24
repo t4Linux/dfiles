@@ -17,9 +17,9 @@ napis() {
 #    #  NALA  #
 alias list='apt list --upgradable'
 alias update='sudo nala upgrade -y && flatpak update -y && sudo nala autoremove -y'
-alias ni='sudo nala install'
-alias nr='sudo nala remove '
-alias ns='nala search '
+alias ni='sudo nala install -y'
+alias nr='sudo nala remove'
+alias ns='nala search'
 
 alias psd='pactl set-default-sink '
 alias psc='pactl set-card-pprofile '
@@ -31,12 +31,11 @@ alias h='history -i -n 100 | bat -pl log'
 alias e='exit'
 
 alias r='ranger'
-alias cat='bat -fn'
+alias cat='bat -f'
 alias ym='bat --language=yaml'
 alias v='nvim'
 alias vk='NVIM_APPNAME="vk" nvim'
 alias sv='sudo nvim'
-alias l='lvim'
 alias napis='figlet'
 
 # herbstlusftwm
@@ -70,33 +69,3 @@ alias m='minikube'
 alias d='docker'
 
 # alias orphan='sudo pacman -Rs $(pacman -Qqtd)'
-
-#kubernetes
-alias k='kubectl'
-alias ka='kubectl apply -f'
-alias kcn='kubectl create namespace'
-alias ke='kubectl edit'
-alias ken='kubectl edit -n'
-alias kecmn='kubectl edit configmap -n'
-alias kee='kubectl edit events'
-alias kd='kubectl describe'
-alias kdpo='kubectl describe pod'
-alias kdn='kubectl describe -n'
-alias klo='kubectl logs'
-alias klon='kubectl logs -n'
-alias krm='kubectl delete'
-
-alias kg='kubectl get'
-alias kgp='kubectl get po'
-alias kgpn='kubectl get po -n'
-alias kgpnw='kubectl get po -w -n'
-alias kgsvcn='kubectl get secrets -n'
-
-alias kc='kubectl create'
-alias kga='kubectl get all'
-alias krmcm='kubectl delete configmap'
-alias krmpo='kubectl delete pod'
-alias krmcmn='kubectl delete configmap -n'
-alias kgcm='kubectl get configmaps'
-alias kgcmn='kubectl get configmaps -n'
-

@@ -1,23 +1,22 @@
-if (( $+commands[kubectl] )); then
-  # TODO: 2022-01-05: remove this block
-  # remove old generated files
- # command rm -f "$ZSH_CACHE_DIR/kubectl_completion"
-
-  # TODO: 2022-01-05: remove this bit of code as it exists in oh-my-zsh.sh
-  # Add completions folder in $ZSH_CACHE_DIR
-  command mkdir -p "~/.config/zsh/completions"
-  (( ${fpath[(Ie)"~/.config/zsh/completions"]} )) || fpath=("~/.config/zsh/completions" $fpath)
-
-  # If the completion file does not exist, generate it and then source it
-  # Otherwise, source it and regenerate in the background
-  if [[ ! -f "~/.config/zsh/completions/_kubectl" ]]; then
-    kubectl completion zsh | tee "~/.config/zsh/completions/_kubectl" >/dev/null
-    source "~/.config/zsh/completions/_kubectl"
-  else
-    source "~/.config/zsh/completions/_kubectl"
-    kubectl completion zsh | tee "~/.config/zsh/completions/_kubectl" >/dev/null &|
-  fi
+if (( ! $+commands[kubectl] )); then
+  return
 fi
+
+if command -v kubectl &> /dev/null; then
+  source <(kubectl completion zsh | sed 's#${requestComp} 2>/dev/null#${requestComp} 2>/dev/null | head -n -1 | fzf  --multi=0 #g')
+  alias kubectl=kubecolor 1>/dev/null
+  compdef __start_kubectl k
+  compdef kubecolor=kubectl
+fi
+# If the completion file doesn't exist yet, we need to autoload it and
+# bind it to `kubectl`. Otherwise, compinit will have already done that.
+if [[ ! -f "$ZSH_CACHE_DIR/completions/_kubectl" ]]; then
+  typeset -g -A _comps
+  autoload -Uz _kubectl
+  _comps[kubectl]=_kubectl
+fi
+
+kubectl completion zsh 2> /dev/null >| "$ZSH_CACHE_DIR/completions/_kubectl" &|
 
 # This command is used a LOT both below and in daily life
 alias k=kubectl
@@ -29,23 +28,28 @@ alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
 alias kaf='kubectl apply -f'
 
 # Drop into an interactive terminal on a container
-alias keti='kubectl exec -t -i'
+alias keit='kubectl exec -t -i'
 
 # Manage configuration quickly to switch contexts between local, dev ad staging.
 alias kcuc='kubectl config use-context'
 alias kcsc='kubectl config set-context'
 alias kcdc='kubectl config delete-context'
 alias kccc='kubectl config current-context'
+alias kccn='function _kccn(){ kubectl config set-context --current --namespace=$1; }; _kccn'
+alias kcns='kubectl config view --minify -o jsonpath={..namespace}'
 
 # List all contexts
 alias kcgc='kubectl config get-contexts'
 
-# General aliases
+# General aliases
 alias kdel='kubectl delete'
 alias kdelf='kubectl delete -f'
 
 # Pod management.
 alias kgp='kubectl get pods'
+alias kgpl='kgp -l'
+alias kgpn='kgp -n'
+alias kgpsl='kubectl get pods --show-labels'
 alias kgpa='kubectl get pods --all-namespaces'
 alias kgpw='kgp --watch'
 alias kgpwide='kgp -o wide'
@@ -53,12 +57,6 @@ alias kep='kubectl edit pods'
 alias kdp='kubectl describe pods'
 alias kdelp='kubectl delete pods'
 alias kgpall='kubectl get pods --all-namespaces -o wide'
-
-# get pod by label: kgpl "app=myapp" -n myns
-# alias kgpl='kgp -l'
-
-# get pod by namespace: kgpn kube-system"
-alias kgpn='kgp -n'
 
 # Service management.
 alias kgs='kubectl get svc'
@@ -125,7 +123,7 @@ alias kgssw='kgss --watch'
 alias kgsswide='kgss -o wide'
 alias kess='kubectl edit statefulset'
 alias kdss='kubectl describe statefulset'
-alias kdelss='kubectl deete statefulset'
+alias kdelss='kubectl delete statefulset'
 alias ksss='kubectl scale statefulset'
 alias krsss='kubectl rollout status statefulset'
 
@@ -151,6 +149,7 @@ alias kcp='kubectl cp'
 
 # Node Management
 alias kgno='kubectl get nodes'
+alias kgnosl='kubectl get nodes --show-labels'
 alias keno='kubectl edit node'
 alias kdno='kubectl describe node'
 alias kdelno='kubectl delete node'
@@ -169,6 +168,7 @@ alias kdelsa="kubectl delete sa"
 
 # DaemonSet management.
 alias kgds='kubectl get daemonset'
+alias kgdsa='kubectl get daemonset --all-namespaces'
 alias kgdsw='kgds --watch'
 alias keds='kubectl edit daemonset'
 alias kdds='kubectl describe daemonset'
@@ -186,13 +186,23 @@ alias kej='kubectl edit job'
 alias kdj='kubectl describe job'
 alias kdelj='kubectl delete job'
 
-# Only run if the user actually has kubectl installed
-if (( ${+_comps[kubectl]} )); then
-  function kj() { kubectl "$@" -o json | jq; }
-  function kjx() { kubectl "$@" -o json | fx; }
-  function ky() { kubectl "$@" -o yaml | yh; }
+# Utility print functions (json / yaml)
+function _build_kubectl_out_alias {
+  setopt localoptions norcexpandparam
 
-  compdef kj=kubectl
-  compdef kjx=kubectl
-  compdef ky=kubectl
-fi
+  # alias function
+  eval "function $1 { $2 }"
+
+  # completion function
+  eval "function _$1 {
+    words=(kubectl \"\${words[@]:1}\")
+    _kubectl
+  }"
+
+  compdef _$1 $1
+}
+
+_build_kubectl_out_alias "kj"  'kubectl "$@" -o json | jq'
+_build_kubectl_out_alias "kjx" 'kubectl "$@" -o json | fx'
+_build_kubectl_out_alias "ky"  'kubectl "$@" -o yaml | yh'
+unfunction _build_kubectl_out_alias

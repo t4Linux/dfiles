@@ -8,6 +8,18 @@
 # |  Dscr: ZSH configuration - basics          2023-02-17     \___)=(___// | #
 # +------------------------------------------ 2023-02-17 ------------------+ #
 #
+
+# Theming section  
+autoload -U compinit colors zcalc
+compinit -d
+colors
+
+# autoload -Uz compinit
+# compinit
+# autoload -Uz zmodload
+# zmodload zsh/zle
+# zmodload zsh/complist
+
 setopt autocd notify                       # if only directory path is entered, cd there.
 setopt correct                             # Auto correct mistakes
 setopt extendedglob                        # Extended globbing. Allows using regular expressions with *
@@ -17,9 +29,6 @@ setopt nocheckjobs                         # Don't warn about running processes 
 setopt numericglobsort                     # Sort filenames numerically when it makes sense
 setopt nobeep                              # No beep
 setopt appendhistory                       # Immediately append history instead of overwriting
-setopt histignorealldups                   # If a new command is a duplicate, remove the older one
-setopt inc_append_history                  # save commands are added to the history immediately, otherwise only when shell exits.
-setopt histignorespace                     # Don't save commands that start with space
 
 bindkey -v
 # The following lines were added by compinstall
@@ -42,3 +51,4 @@ if [[ -r /usr/share/zsh/functions/command-not-found.zsh ]]; then
     source /usr/share/zsh/functions/command-not-found.zsh
     export PKGFILE_PROMPT_INSTALL_MISSING=1
 fi
+

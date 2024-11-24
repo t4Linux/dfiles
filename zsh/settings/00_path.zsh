@@ -10,8 +10,6 @@
 #
 
 [[ ! -d "$HOME/.local/bin" ]] || PATH="$HOME/.local/bin:$PATH"
-[[ ! -d "$MY_FILES/zsh/zsh-completions" ]] || \
-PATH="$MY_FILES/zsh/zsh-completions/src:$PATH"
 
 [[ ! -d "$HOME/.local/share/cargo/bin" ]] || \
 PATH="$HOME/.local/share/cargo/bin:$PATH"

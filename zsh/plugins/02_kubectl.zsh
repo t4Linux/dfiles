@@ -1,4 +1,3 @@
-#!/bin/env bash
 # +-- created by: achmur -------------- time4Linux ------------------------+ #
 # |     __  __ __  __    _                           __           .--.     | #
 # |    / /_/ // / / /   (_)___  __  ___  __   ____  / /          |ö_ö |    | #
@@ -8,20 +7,6 @@
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Dscr: ZSH configuration - KUBERNETES      2022-12-13     \___)=(___// | #
 # +------------------------------------------ 2023-03-01 ------------------+ #
-#
-# if command -v kubectl &> /dev/null; then
-#   source <(kubectl completion zsh | sed 's#${requestComp} 2>/dev/null#${requestComp} 2>/dev/null | head -n -1 | fzf  --multi=0 #g')
-#   alias kubectl=kubecolor 1>/dev/null
-#   compdef __start_kubectl k
-#   compdef kubecolor=kubectl
-# fi
-
-
-[[ ! -e $MY_FILES/zsh/plugins/_kubectx.zsh ]] || \
-  source $MY_FILES/zsh/plugins/_kubectx.zsh
-
-[[ ! -f $MY_FILES/zsh/plugins/_kubens.zsh ]] || \
-  source $MY_FILES/zsh/plugins/_kubens.zsh
 
 # This function implements `kubectl view-serviceaccount-kubeconfig **`
 # Function name must be _fzf_complete_(command)_(subcommand)

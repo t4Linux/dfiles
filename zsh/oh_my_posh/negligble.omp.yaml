@@ -1,0 +1,46 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/JanDeDobbeleer/oh-my-posh/main/themes/schema.json
+
+blocks:
+- type: prompt
+  alignment: left
+  segments:
+  - template: "{{ if .WSL }}WSL at {{ end }}{{.Icon}}"
+    foreground: cyan
+    type: os
+    style: powerline
+  - properties:
+      style: full
+    template: " {{ .Path }} "
+    foreground: cyan
+    type: path
+    style: plain
+  - properties:
+      fetch_status: "true"
+    template: ":: {{ .HEAD }}{{if .BranchStatus }} {{ .BranchStatus }}{{ end }}{{ if .Staging.Changed }} \uf046 {{ .Staging.String }}{{ end }}{{ if and (.Working.Changed) (.Staging.Changed) }} |{{ end }}{{ if .Working.Changed }} \uf044 {{ .Working.String }}{{ end }} "
+    foreground: "#F1502F"
+    type: git
+    style: plain
+- alignment: right
+  segments:
+  - template: "| root "
+    foreground: red
+    type: root
+    style: plain
+  - template: "| \ue798 {{ if .Error }}{{ .Error }}{{ else }}{{ .Full }}{{ end }} "
+    foreground: "#06A4CE"
+    type: dart
+    style: powerline
+  - template: "| \ue718 {{ if .PackageManagerIcon }}{{ .PackageManagerIcon }} {{ end }}{{ .Full }} "
+    foreground: "#6CA35E"
+    type: node
+    style: powerline
+  - properties:
+      display_mode: context
+      fetch_virtual_env: "true"
+    template: "| \ue235 {{ .Venv }} "
+    foreground: "#4584b6"
+    type: python
+    style: plain
+  - foreground_templates:
+    - "{{if eq "
+version: 3

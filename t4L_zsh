@@ -7,13 +7,14 @@
 # |  \__/  /_/ /_____/_/_/ /_/\__,_/_/|_/(_) .___/_/           (|     | )  | #
 # |                                       /_/                 /'\_   _/`\\ | #
 # |  Version     : 1.0                         2023-02-21     \___)=(___// | #
-# +------------------------------------------ 2023-03-06 ------------------+ #
+# +------------------------------------------ 2024-10-06 ------------------+ #
 # |  Description : ZSH configuration setup                                 | #
 # +------------------------------------------------------------------------+ #
 #
 # |------------------------ zsh FUNCTIONS        --------------------------| #
 REPO=$(pwd)
 USER_LOK=$1
+GIT_LOK=$HOME/t4Linux/github/zsh
 
 fonts() {
   cp -r $REPO/fonts $HOME/$USER_LOK/
@@ -22,12 +23,14 @@ fonts() {
 }
 
 create() {
-  mkdir -p $HOME/$USER_LOK
+  mkdir -p $HOME/$USER_LOK $GIT_LOK
   cp -r $REPO/zsh/ $HOME/$USER_LOK/zsh
   ln -s $HOME/$USER_LOK/zsh/zshenv $HOME/.zshenv
   echo "ZDOTDIR=$HOME/$USER_LOK/zsh" >>$HOME/.zshenv
   location="export MY_FILES"
+  location2="export MY_FILES"
   echo $location"="$HOME/$USER_LOK >>$HOME/.zshenv
+  echo $location2"="$GIT_LOK >>$HOME/.zshenv
   if [[ ! -d $HOME/.local/share/fonts ]]; then
     fonts
   else
@@ -37,14 +40,14 @@ create() {
 }
 # |------------------------ zsh plugin installer --------------------------| #
 zsh_plug() {
-  git -C $HOME/$USER_LOK/zsh/ clone https://github.com/$1.git
+  git -C $GIT_LOK/ clone https://github.com/$1.git
 }
 
 # |---------------------  checking for script args  -----------------------| #
 #
 if [ ${#} -eq 0 ]; then
-  echo -e "Please enter the location of your all DOTFILES folder\n"
-  echo -e "Correct format is: t4_zsh $HOME but suggested t4_zsh .t4Linux"
+  echo -e "Please enter the location of your all DOTFILES folder "
+  echo -e "Suggested t4_zsh .t4Linux"
   exit 78
 fi
 # |---------------------     MAIN SCRIPT            -----------------------| #
@@ -66,55 +69,51 @@ else
 fi
 
 # |------------------------ plugins installation -------------------------| #
-if [[ ! -d $HOME/$USER_LOK/zsh/fzf ]]; then
+if [[ ! -d $GIT_LOK/fzf ]]; then
   a=prefix=\'~/.fzf\'
   b=prefix=
-  c=$HOME/$USER_LOK/fzf
+  c=$GIT_LOK/fzf
   zsh_plug "junegunn/fzf"
-  sed -ie "s@$a@$b$c@g" $HOME/$USER_LOK/zsh/fzf/install
-  $HOME/$USER_LOK/zsh/fzf/install --all --completion --no-fish --no-bash --xdg --no-update-rc
-  mv $HOME/$USER_LOK/zsh/fzf/bin/* $HOME/.local/bin/
-  cp $HOME/$USER_LOK/zsh/fzf/shell/key-bindings.zsh $HOME/$USER_LOK/zsh/plugins/
-  rm -fr $HOME/$USER_LOK/zsh/fzf
+  sed -ie "s@$a@$b$c@g" $GIT_LOK/fzf/install
+  $GIT_LOK/fzf/install --all --completion --no-fish --no-bash --xdg --no-update-rc
+  ln -s $GIT_LOK/fzf/bin/fzf $HOME/.local/bin/fzf
+  ln -s $GIT_LOK/fzf/bin/fzf-preview.sh $HOME/.local/bin/fzf-preview.sh
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/fzf-tab ]]; then
+if [[ ! -d $GIT_LOK/fzf-tab ]]; then
   zsh_plug "Aloxaf/fzf-tab"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/zsh-autosuggestions ]]; then
+if [[ ! -d $GIT_LOK/zsh-autosuggestions ]]; then
   zsh_plug "zsh-users/zsh-autosuggestions"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/zsh-completions ]]; then
+if [[ ! -d $GIT_LOK/zsh-completions ]]; then
   zsh_plug "zsh-users/zsh-completions"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/zsh-syntax-highlighting ]]; then
+if [[ ! -d $GIT_LOK/zsh-syntax-highlighting ]]; then
   zsh_plug "zsh-users/zsh-syntax-highlighting"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/powerlevel10k ]]; then
+if [[ ! -d $GIT_LOK/powerlevel10k ]]; then
   zsh_plug "romkatv/powerlevel10k"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/zsh-history-substring-search ]]; then
+if [[ ! -d $GIT_LOK/zsh-history-substring-search ]]; then
   zsh_plug "zsh-users/zsh-history-substring-search"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/fzf-zsh-completions/ ]]; then
+if [[ ! -d $GIT_LOK/fzf-zsh-completions/ ]]; then
   zsh_plug "chitoku-k/fzf-zsh-completions"
 fi
 
-if [[ ! -d $HOME/$USER_LOK/zsh/zsh-z ]]; then
+if [[ ! -d $GIT_LOK/zsh-z ]]; then
   zsh_plug "agkozak/zsh-z"
 fi
 
 if [[ ! -L $HOME/.config/zsh ]]; then
   ln -s $HOME/$USER_LOK/zsh/ $HOME/.config/zsh
-fi
-if [[ ! -d $HOME/$USER_LOK/aliases ]]; then
-  cp -r $REPO/aliases $HOME/$USER_LOK
 fi
 if [[ ! -d $HOME/$USER_LOK/fonts ]]; then
   ln -s $REPO/fonts $HOME/.local/share/fonts

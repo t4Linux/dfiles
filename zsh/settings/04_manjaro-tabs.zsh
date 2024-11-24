@@ -1,50 +1,3 @@
-## Options section
-WORDCHARS=${WORDCHARS//\/[&.;]}                                 # Don't consider certain characters part of the word
-
-
-## Keybindings section
-# bindkey -e
-bindkey '^[[7~' beginning-of-line                               # Home key
-bindkey '^[[H' beginning-of-line                                # Home key
-if [[ "${terminfo[khome]}" != "" ]]; then
-  bindkey "${terminfo[khome]}" beginning-of-line                # [Home] - Go to beginning of line
-fi
-bindkey '^[[8~' end-of-line                                     # End key
-bindkey '^[[F' end-of-line                                     # End key
-if [[ "${terminfo[kend]}" != "" ]]; then
-  bindkey "${terminfo[kend]}" end-of-line                       # [End] - Go to end of line
-fi
-bindkey '^[[2~' overwrite-mode                                  # Insert key
-bindkey '^[[3~' delete-char                                     # Delete key
-bindkey '^[[C'  forward-char                                    # Right key
-bindkey '^[[D'  backward-char                                   # Left key
-bindkey '^[[5~' history-beginning-search-backward               # Page up key
-bindkey '^[[6~' history-beginning-search-forward                # Page down key
-
-# Navigate words with ctrl+arrow keys
-bindkey '^[Oc' forward-word                                     #
-bindkey '^[Od' backward-word                                    #
-bindkey '^[[1;5D' backward-word                                 #
-bindkey '^[[1;5C' forward-word                                  #
-bindkey '^H' backward-kill-word                                 # delete previous word with ctrl+backspace
-bindkey '^[[Z' undo                                             # Shift+tab undo last action
-
-# Theming section  
-autoload -U compinit colors zcalc
-compinit -d
-colors
-
-
-
-## Plugins section: Enable fish style features
-# Use syntax highlighting
-# bind UP and DOWN arrow keys to history substring search
-#zmodload zsh/terminfo
-#bindkey "$terminfo[kcuu1]" history-substring-search-up
-#bindkey "$terminfo[kcud1]" history-substring-search-down
-#bindkey '^[[A' history-substring-search-up			
-#bindkey '^[[B' history-substring-search-down
-
 
 # Set terminal window and tab/icon title
 #
@@ -64,9 +17,10 @@ function title {
   : ${2=$1}
 
   case "$TERM" in
-    xterm*|putty*|rxvt*|konsole*|ansi|mlterm*|alacritty|st*)
+    xterm*|putty*|kitty*|konsole*|ansi|mlterm*|alacritty|st*)
       print -Pn "\e]2;${2:q}\a" # set window name
-      print -Pn "\e]1;${1:q}\a" # set tab name
+      print -Pn "\e]0;$*\a"
+      # print -Pn "\e]1;${1:q}\a" # set tab name
       ;;
     screen*|tmux*)
       print -Pn "\ek${1:q}\e\\" # set screen hardstatus
@@ -84,7 +38,9 @@ function title {
 }
 
 ZSH_THEME_TERM_TAB_TITLE_IDLE="%15<..<%~%<<" #15 char left truncated PWD
-ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
+# ZSH_THEME_TERM_TITLE_IDLE="%n@%m:%~"
+ZSH_THEME_TERM_TITLE_IDLE=""
+
 
 # Runs before showing the prompt
 function mzc_termsupport_precmd {
@@ -139,7 +95,8 @@ function mzc_termsupport_preexec {
   local CMD=${1[(wr)^(*=*|sudo|ssh|mosh|rake|-*)]:gs/%/%%}
   local LINE="${2:gs/%/%%}"
 
-  title '$CMD' '%100>...>$LINE%<<'
+  # title '$CMD' '%100>...>$LINE%<<'
+  title '$CMD'
 }
 
 autoload -U add-zsh-hook
@@ -147,6 +104,6 @@ add-zsh-hook precmd mzc_termsupport_precmd
 add-zsh-hook preexec mzc_termsupport_preexec
 
 # File and Dir colors for ls and other outputs
-export LS_OPTIONS='--color=auto'
+# export LS_OPTIONS='--color=auto'
 eval "$(dircolors -b)"
-alias ls='ls $LS_OPTIONS'
+# alias ls='ls $LS_OPTIONS'
