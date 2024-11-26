@@ -53,6 +53,46 @@
           "type": "node"
         },
         {
+          "type": "docker",
+          "background": "transparent",
+          "foreground": "darkGray",
+          "style": "powerline",
+          "template": "  {{ .Context }} "
+        },
+        {
+          "type": "kubectl",
+          "background": "transparent",
+          "foreground": "lightMagenta",
+          "style": "powerline",
+          "template": " ﴱ {{.Context}}{{if .Namespace}} :: {{.Namespace}}{{end}} ",
+          "properties": {
+            "context_aliases": {
+              "arn:aws:eks:eu-west-1:1234567890:cluster/posh": "posh"
+            }
+          }
+        },
+        {
+          "background": "transparent",
+          "foreground": "darkGray",
+          "type": "terraform",
+          "style": "powerline",
+          "template": "{{.WorkspaceName}}"
+        },
+        {
+          "background": "transparent",
+          "foreground": "darkGray",
+          "type": "aws",
+          "style": "powerline",
+          "template": "  {{.Profile}}{{if .Region}}@{{.Region}}{{end}}"
+        },
+        {
+          "background": "transparent",
+          "foreground": "darkGray",
+          "type": "gcp",
+          "style": "powerline",
+          "template": "  {{.Project}} :: {{.Account}} "
+        },
+        {
           "foreground": "#4584b6",
           "properties": {
             "display_mode": "context",
@@ -76,6 +116,13 @@
           "style": "powerline",
           "template": "| {{ if not .Error }}{{ .Icon }}{{ .Percentage }}{{ end }}{{ .Error }} \uf295 ",
           "type": "battery"
+        },
+        {
+          "background": "transparent",
+          "foreground": "darkGray",
+          "template": " Helm {{ .Version }}",
+          "style": "powerline",
+          "type": "helm"
         },
         {
           "foreground": "lightGreen",
