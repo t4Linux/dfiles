@@ -69,4 +69,8 @@ alias la='exa -lga --group-directories-first --icons --color-scale --time-style=
 alias m='minikube'
 alias d='docker'
 
+alias krrd='kubectl rollout restart deployment'
+alias krsd='kubectl rollout status deployment'
+alias krrs='kubectl rollout restart statefulset'
+alias krss='kubectl rollout status statefulset'
 # alias orphan='sudo pacman -Rs $(pacman -Qqtd)'
