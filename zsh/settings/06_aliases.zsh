@@ -16,7 +16,7 @@ napis() {
 #
 #    #  NALA  #
 alias list='apt list --upgradable'
-alias update='sudo nala upgrade -y && flatpak update -y && sudo nala autoremove -y'
+alias nu='sudo nala full-upgrade -y && flatpak update -y && sudo nala autoremove -y'
 alias ni='sudo nala install -y'
 alias nr='sudo nala remove'
 alias ns='nala search'
@@ -29,6 +29,7 @@ alias s='source ~/.zshrc'
 alias vs='nvim ~/.zshrc'
 alias h='history -i -n 100 | bat -pl log'
 alias e='exit'
+alias t='tmux'
 
 alias r='ranger'
 alias cat='bat -f'

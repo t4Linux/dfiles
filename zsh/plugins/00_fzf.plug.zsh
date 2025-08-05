@@ -15,7 +15,7 @@ export FZF_COMPLETION_TRIGGER='``'
 # export FZF_DEFAULT_COMMAND="fzf --print0 | xargs -0 -o vim"
 
 export FZF_DEFAULT_OPTS="
-  --height 50% --layout reverse --info inline --border=double \
+  --height 50% --layout reverse --info inline --border=double --border=rounded --margin=1% \
   --bind 'ctrl-/:change-preview-window(30%|hidden|)'
   --info=inline"
   # CTRL-/ to toggle small preview window to see the full command

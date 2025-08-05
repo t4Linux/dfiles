@@ -23,6 +23,9 @@ alias k=kubectl
 alias kn=kubens
 alias kc=kubectx
 
+alias krrd='k rollout restart deployment'
+alias krsd='k rollout status deployment'
+
 # Execute a kubectl command against all namespaces
 alias kca='_kca(){ kubectl "$@" --all-namespaces;  unset -f _kca; }; _kca'
 
@@ -44,11 +47,13 @@ alias kcns='kubectl config view --minify -o jsonpath={..namespace}'
 alias kcgc='kubectl config get-contexts'
 
 # General aliases
+alias kg='kubectl get'
 alias kdel='kubectl delete'
 alias kdelf='kubectl delete -f'
 
 # Pod management.
 alias kgp='kubectl get pods'
+alias kgn='kubectl get ns'
 alias kgpl='kgp -l'
 alias kgpn='kgp -n'
 alias kgpsl='kubectl get pods --show-labels'
@@ -59,6 +64,7 @@ alias kep='kubectl edit pods'
 alias kdp='kubectl describe pods'
 alias kdelp='kubectl delete pods'
 alias kgpall='kubectl get pods --all-namespaces -o wide'
+
 
 # Service management.
 alias kgs='kubectl get svc'

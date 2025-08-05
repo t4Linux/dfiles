@@ -121,3 +121,6 @@ fi
 
 export NVM_DIR="$HOME/.config/nvm"
 [ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"
+ZDOTDIR=/home/donald/.t4Linux/zsh
+export MY_FILES=/home/donald/.t4Linux
+export MY_GIT_LOK=/home/donald/t4Linux/github/zsh
